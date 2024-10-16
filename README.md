@@ -18,15 +18,17 @@ Two datasets are in focus for this project. They are both stored in the `/dtu/da
 
 ## To Do's
 
-- Dataloaders
-- Analysis of data
-- Data-preprocessing (e.g. subsampling of images)
-- Encoder-Decoder Architecture
-- UNet Architecture
-- Training loop
-- Performance metrics
-- Results & Visualisation
-- Ablation study
+- Dataloaders -> Filip
+- Analysis of data -> Filip
+- Data-preprocessing (e.g. subsampling of images) -> Filip
+- Encoder-Decoder Architecture -> Nandor
+- UNet Architecture -> Zeljko
+- Training loop -> Lukas
+- Performance metrics -> Alex
+- Results & Visualisation -> Alex
+- Ablation study -> Lukas
+
+Next Meeting Monday 18:00
 
 ## Submission Deadline
 
