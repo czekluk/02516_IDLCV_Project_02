@@ -112,3 +112,5 @@ venv.bak/
 /results/saved_saliency_maps
 /data/
 main_notebook.ipynb
+
+*.ipynb
