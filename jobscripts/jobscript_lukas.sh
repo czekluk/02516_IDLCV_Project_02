@@ -6,7 +6,7 @@
 #BSUB -gpu "num=1:mode=exclusive_process"
 
 ### ------------- specify job name ----------------
-#BSUB -J exercise_2_1
+#BSUB -J project_2
 
 ### ------------- specify number of cores ----------------
 #BSUB -n 4
@@ -24,4 +24,4 @@
 module load python3/3.11.9
 
 source /zhome/c4/e/203768/IDLCV/bin/activate
-python /zhome/c4/e/203768/02516_IDLCV_PROJECT_02/main.py
+python /zhome/c4/e/203768/02516_IDLCV_PROJECT_02/src/main.py

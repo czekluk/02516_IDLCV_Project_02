@@ -16,6 +16,25 @@ Two datasets are in focus for this project. They are both stored in the `/dtu/da
 
 ![retinal blood vessel](/docs/38_training.png)
 
+## Run training on the HPC
+
+To start training using batch jobs first modify the `jobscript.sh` file you want to use. Please note that every contributor is recommended to create his own `jobscript_[NAME].sh` file according to his preferences.
+
+Then execute:
+```bash
+bsub -app c02516_1g.10gb < jobscript_[NAME].sh
+```
+
+To monitor the progress execute:
+```bash
+bstat
+```
+
+To abort the run:
+```bash
+bkill <job-id>
+```
+
 ## To Do's
 
 - Dataloaders -> Filip

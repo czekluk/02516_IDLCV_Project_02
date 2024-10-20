@@ -4,7 +4,7 @@ import PIL.Image as Image
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
-from custom_transforms import random_transform, base_transform
+from data.custom_transforms import random_transform, base_transform
 
 from torch.utils.data import DataLoader, Dataset
 

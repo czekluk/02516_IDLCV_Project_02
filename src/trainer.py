@@ -91,7 +91,7 @@ class Trainer:
             'test_specificity': [],
             'epochs':           num_epochs,
             'optimizer_config': optimizer_config,
-            'criterion':        criterion,
+            'criterion':        criterion.__class__.__name__,
             'transform':        None
             }
         
@@ -108,18 +108,18 @@ class Trainer:
                 data, target = data.to(self.device), target.to(self.device)
 
                 optimizer.zero_grad()
-                output = model(data).view(-1)
+                output = model(data)
                 loss = criterion(output, target.clone().detach().float().requires_grad_(True))
                 loss.backward()
                 optimizer.step()
                 
                 train_loss.append(loss.item())
                 predicted = (output > 0.5).float()
-                train_acc.append(accuracy(predicted, target))
-                train_dice.append(dice_overlap(predicted, target))
-                train_iou.append(intersection_over_union(predicted, target))
-                train_sensitivity.append(sensitivity(predicted, target))
-                train_specificity.append(specificity(predicted, target))
+                train_acc.append(accuracy(predicted, target).cpu().item())
+                train_dice.append(dice_overlap(predicted, target).cpu().item())
+                train_iou.append(intersection_over_union(predicted, target).cpu().item())
+                train_sensitivity.append(sensitivity(predicted, target).cpu().item())
+                train_specificity.append(specificity(predicted, target).cpu().item())
                 
             
             test_loss = []
@@ -132,14 +132,14 @@ class Trainer:
             for data, target in self.test_loader:
                 data, target = data.to(self.device), target.to(self.device)
                 with torch.no_grad():
-                    output = model(data).view(-1)
+                    output = model(data)
                 test_loss.append(criterion(output, target.clone().detach().float().requires_grad_(True)).cpu().item())
                 predicted = (output > 0.5).float()
-                test_acc.append(accuracy(predicted, target))
-                test_dice.append(dice_overlap(predicted, target))
-                test_iou.append(intersection_over_union(predicted, target))
-                test_sensitivity.append(sensitivity(predicted, target))
-                test_specificity.append(specificity(predicted, target))
+                test_acc.append(accuracy(predicted, target).cpu().item())
+                test_dice.append(dice_overlap(predicted, target).cpu().item())
+                test_iou.append(intersection_over_union(predicted, target).cpu().item())
+                test_sensitivity.append(sensitivity(predicted, target).cpu().item())
+                test_specificity.append(specificity(predicted, target).cpu().item())
 
             # Add entries output json
             out_dict['train_loss'].append(np.mean(train_loss))

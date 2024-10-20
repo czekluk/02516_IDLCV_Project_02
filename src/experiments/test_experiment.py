@@ -1,8 +1,8 @@
 import torch
 import os
 
-from src.trainer import Trainer
-from src.utils import save_results
+from trainer import Trainer
+from utils import save_results
 from data.custom_transforms import base_transform, random_transform
 from data.make_dataset import SegmentationDataModule
 from models.test_cnn import TestCNN
@@ -16,8 +16,8 @@ DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
 
 def test_experiment(epochs=10):
     """Experiment to test the Code using the TestCNN model"""
-    train_transform = random_transform(normalize=True,size=256, rotation=True, perspective=True, random_erasing=True)
-    test_transform = base_transform(normalize=True,size=256)
+    train_transform = base_transform(size=256)
+    test_transform = base_transform(size=256)
     dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR)
     trainloader = dm.train_dataloader()
     testloader = dm.test_dataloader()
@@ -35,7 +35,7 @@ def test_experiment(epochs=10):
     ]
 
     criterion_functions = [
-        torch.nn.BCELoss()
+        torch.nn.BCEWithLogitsLoss()
     ]
 
     epochs = [epochs]
