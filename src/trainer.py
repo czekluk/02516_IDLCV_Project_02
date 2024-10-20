@@ -7,12 +7,13 @@ from data.custom_transforms import base_transform, random_transform
 from typing import List
 from torch.utils.data import DataLoader
 import datetime
+from metrics import accuracy, dice_overlap, intersection_over_union, sensitivity, specificity
 
 class Trainer:
     
     def __init__(self, models: List[nn.Module], optimizer_functions: List[dict], 
                  epochs: int, train_loader: DataLoader, test_loader: DataLoader,
-                 train_transform, description) -> None:
+                 train_transform, description, criterion_functions) -> None:
         """
         Class for training different models with different optimizers and different numbers of epochs.
         
@@ -26,7 +27,7 @@ class Trainer:
         assert len(models) == len(description)
 
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.criterion = nn.BCELoss()
+        self.criterions = criterion_functions
         self.models = models
         self.optimizer_functions = optimizer_functions
         self.epochs = epochs
@@ -47,30 +48,31 @@ class Trainer:
         outputs = []
         count = 0
         for network in self.models:
-            for optimizer_config in self.optimizer_functions:
-                for epoch_no in self.epochs:
-                    print("#########################################################")
-                    print(f"Training model: {network.__name__}")
-                    print(f"Description: {self.description[count]}")
-                    print(f"Optimizer: {optimizer_config['optimizer'].__name__}")
-                    print(f"Training for {epoch_no} epochs")
-                    model = network()
-                    out_dict = self._train_single_configuration(model, optimizer_config, epoch_no)
-                    out_dict["description"] = self.description[count]
-                    out_dict["timestamp"] = datetime.datetime.now()
-                    out_dict["transform"] = self.train_transform
-                    outputs.append(out_dict)
+            for criterion in self.criterions:
+                for optimizer_config in self.optimizer_functions:
+                    for epoch_no in self.epochs:
+                        print("#########################################################")
+                        print(f"Training model: {network.__name__}")
+                        print(f"Description: {self.description[count]}")
+                        print(f"Optimizer: {optimizer_config['optimizer'].__name__}")
+                        print(f"Criterion: {criterion.__class__.__name__}")
+                        print(f"Training for {epoch_no} epochs")
+                        model = network()
+                        out_dict = self._train_single_configuration(model, optimizer_config, epoch_no, criterion)
+                        out_dict["description"] = self.description[count]
+                        out_dict["timestamp"] = datetime.datetime.now()
+                        out_dict["transform"] = self.train_transform
+                        outputs.append(out_dict)
             count += 1
         outputs_sorted = sorted(outputs, key=lambda x: x['test_acc'][-1], reverse=True)
         return outputs_sorted
     
     
-    def _train_single_configuration(self, model: nn.Module, optimizer_config: dict, num_epochs: int) -> dict:
+    def _train_single_configuration(self, model: nn.Module, optimizer_config: dict, num_epochs: int, criterion) -> dict:
         model.to(self.device)
         optimizer = optimizer_config["optimizer"](model.parameters(), **optimizer_config["params"])
         
         out_dict = {
-            
             'model_name':       model.__class__.__name__,
             'description':      None,
             'timestamp':        None,
@@ -79,46 +81,95 @@ class Trainer:
             'test_acc':         [],
             'train_loss':       [],
             'test_loss':        [],
+            'train_dice':       [],
+            'test_dice':        [],
+            'train_iou':        [],
+            'test_iou':         [],
+            'train_sensitivity':[],
+            'test_sensitivity': [],
+            'train_specificity':[],
+            'test_specificity': [],
             'epochs':           num_epochs,
             'optimizer_config': optimizer_config,
+            'criterion':        criterion,
             'transform':        None
             }
         
         for epoch in tqdm(range(num_epochs), unit='epoch'):
             model.train()
-            train_correct = 0
             train_loss = []
+            train_acc = []
+            train_dice = []
+            train_iou = []
+            train_sensitivity = []
+            train_specificity = []
             
             for minibatch_no, (data, target) in tqdm(enumerate(self.train_loader), total=len(self.train_loader)):
                 data, target = data.to(self.device), target.to(self.device)
 
                 optimizer.zero_grad()
                 output = model(data).view(-1)
-                loss = self.criterion(output, target.clone().detach().float().requires_grad_(True))
+                loss = criterion(output, target.clone().detach().float().requires_grad_(True))
                 loss.backward()
                 optimizer.step()
                 
                 train_loss.append(loss.item())
                 predicted = (output > 0.5).float()
-                train_correct += (target==predicted).sum().cpu().item()
+                train_acc.append(accuracy(predicted, target))
+                train_dice.append(dice_overlap(predicted, target))
+                train_iou.append(intersection_over_union(predicted, target))
+                train_sensitivity.append(sensitivity(predicted, target))
+                train_specificity.append(specificity(predicted, target))
+                
             
             test_loss = []
-            test_correct = 0
+            test_acc = []
+            test_dice = []
+            test_iou = []
+            test_sensitivity = []
+            test_specificity = []
             model.eval()
             for data, target in self.test_loader:
                 data, target = data.to(self.device), target.to(self.device)
                 with torch.no_grad():
                     output = model(data).view(-1)
-                test_loss.append(self.criterion(output, target.clone().detach().float().requires_grad_(True)).cpu().item())
+                test_loss.append(criterion(output, target.clone().detach().float().requires_grad_(True)).cpu().item())
                 predicted = (output > 0.5).float()
-                test_correct += (target==predicted).sum().cpu().item()
-            out_dict['train_acc'].append(train_correct/len(self.train_loader.dataset))
-            out_dict['test_acc'].append(test_correct/len(self.test_loader.dataset))
+                test_acc.append(accuracy(predicted, target))
+                test_dice.append(dice_overlap(predicted, target))
+                test_iou.append(intersection_over_union(predicted, target))
+                test_sensitivity.append(sensitivity(predicted, target))
+                test_specificity.append(specificity(predicted, target))
+
+            # Add entries output json
             out_dict['train_loss'].append(np.mean(train_loss))
             out_dict['test_loss'].append(np.mean(test_loss))
+
+            out_dict['train_acc'].append(np.mean(train_acc))
+            out_dict['test_acc'].append(np.mean(test_acc))
+
+            out_dict['train_dice'].append(np.mean(train_dice))
+            out_dict['test_dice'].append(np.mean(test_dice))
+
+            out_dict['train_iou'].append(np.mean(train_iou))
+            out_dict['test_iou'].append(np.mean(test_iou))
+
+            out_dict['train_sensitivity'].append(np.mean(train_sensitivity))
+            out_dict['test_sensitivity'].append(np.mean(test_sensitivity))
+
+            out_dict['train_specificity'].append(np.mean(train_specificity))
+            out_dict['test_specificity'].append(np.mean(test_specificity))
+
+            # Print results of this epoch
             print(f"Loss train: {np.mean(train_loss):.3f}\t test: {np.mean(test_loss):.3f}\t",
-                f"Accuracy train: {out_dict['train_acc'][-1]*100:.1f}%\t test: {out_dict['test_acc'][-1]*100:.1f}%")
+                f"Accuracy train: {out_dict['train_acc'][-1]*100:.1f}%\t test: {out_dict['test_acc'][-1]*100:.1f}%",
+                f"Dice train: {out_dict['train_dice'][-1]*100:.1f}\t test: {out_dict['test_dice'][-1]*100:.1f}",
+                f"IoU train: {out_dict['train_iou'][-1]*100:.1f}\t test: {out_dict['test_iou'][-1]*100:.1f}")
             
+        # Print final results
         print(f"Loss train: {np.mean(train_loss):.3f}\t test: {np.mean(test_loss):.3f}\t",
-                f"Accuracy train: {out_dict['train_acc'][-1]*100:.1f}%\t test: {out_dict['test_acc'][-1]*100:.1f}%")
+                f"Accuracy train: {out_dict['train_acc'][-1]*100:.1f}%\t test: {out_dict['test_acc'][-1]*100:.1f}%",
+                f"Dice train: {out_dict['train_dice'][-1]*100:.1f}\t test: {out_dict['test_dice'][-1]*100:.1f}",
+                f"IoU train: {out_dict['train_iou'][-1]*100:.1f}\t test: {out_dict['test_iou'][-1]*100:.1f}")
+        
         return out_dict

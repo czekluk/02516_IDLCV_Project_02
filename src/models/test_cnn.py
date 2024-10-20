@@ -11,7 +11,7 @@ class TestCNN(nn.Module):
             nn.ReLU(),
 
             # Layer 2
-            nn.Conv2d(64, 2, 3, padding=1),
+            nn.Conv2d(64, 1, 3, padding=1),
         )
 
     def forward(self, x):

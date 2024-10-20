@@ -30,6 +30,8 @@ def save_results(outputs, path=os.path.join(PROJECT_BASE_DIR, "results/experimen
             output["model"] = str(output["model"])
         if "optimizer" in output["optimizer_config"]:
             output["optimizer_config"]["optimizer"] = str(output["optimizer_config"]["optimizer"])
+        if "criterion" in output:
+            output["criterion"] = str(output["criterion"])
         if "transform" in output:
             output["transform"] = str(output["transform"])
         if "timestamp" in output:

@@ -12,8 +12,8 @@ PROJECT_BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
 DATA_DIR = "/dtu/datasets1/02516"
-PH2_DATA_DIR = os.path.join(PROJECT_BASE_DIR, "PH2_Dataset_images")
-DRIVE_DIR = os.path.join(PROJECT_BASE_DIR, "DRIVE")
+PH2_DATA_DIR = os.path.join(DATA_DIR, "PH2_Dataset_images")
+DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
 
 
 class SegmentationDataset(Dataset):
