@@ -1,0 +1,45 @@
+import torch
+import os
+
+from trainer import Trainer
+from utils import save_results
+from data.custom_transforms import base_transform, random_transform
+from data.make_dataset import SegmentationDataModule
+from models.test_cnn import TestCNN
+
+PROJECT_BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)
+DATA_DIR = "/dtu/datasets1/02516"
+PH2_DATA_DIR = os.path.join(DATA_DIR, "PH2_Dataset_images")
+DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
+
+def test_experiment(epochs=10):
+    """Experiment to test the Code using the TestCNN model"""
+    train_transform = base_transform(size=256)
+    test_transform = base_transform(size=256)
+    dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR)
+    trainloader = dm.train_dataloader()
+    testloader = dm.test_dataloader()
+
+    models = [
+        TestCNN
+    ]
+
+    description = [
+        "TestCNN",
+    ]
+
+    optimizers = [
+        {"optimizer": torch.optim.Adam, "params": {"lr": 1e-4, "weight_decay": 1e-5}}
+    ]
+
+    criterion_functions = [
+        torch.nn.BCEWithLogitsLoss()
+    ]
+
+    epochs = [epochs]
+
+    trainer = Trainer(models, optimizers, epochs, trainloader, testloader, train_transform, description, criterion_functions)
+    outputs = trainer.train()
+    save_results(outputs, os.path.join(PROJECT_BASE_DIR, "results/experiments.json"))

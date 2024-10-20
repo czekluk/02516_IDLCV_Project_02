@@ -4,7 +4,7 @@ import PIL.Image as Image
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
-from custom_transforms import random_transform, base_transform
+from data.custom_transforms import random_transform, base_transform
 
 from torch.utils.data import DataLoader, Dataset
 
@@ -12,8 +12,8 @@ PROJECT_BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
 DATA_DIR = "/dtu/datasets1/02516"
-PH2_DATA_DIR = os.path.join(PROJECT_BASE_DIR, "PH2_Dataset_images")
-DRIVE_DIR = os.path.join(PROJECT_BASE_DIR, "DRIVE")
+PH2_DATA_DIR = os.path.join(DATA_DIR, "PH2_Dataset_images")
+DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
 
 
 class SegmentationDataset(Dataset):
