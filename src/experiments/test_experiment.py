@@ -6,6 +6,7 @@ from utils import save_results
 from data.custom_transforms import base_transform, random_transform
 from data.make_dataset import SegmentationDataModule
 from models.test_cnn import TestCNN
+from models.encoder_decoder import EncDec_base, EncDecStride, EncDec_dropout, DilatedConvNet
 
 PROJECT_BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,15 +24,21 @@ def test_experiment(epochs=10):
     testloader = dm.test_dataloader()
 
     models = [
-        TestCNN
+        EncDec_base,
+        EncDecStride,
+        EncDec_dropout,
+        DilatedConvNet
     ]
 
     description = [
-        "TestCNN",
+        "EncDec_base",
+        "EncDecStride",
+        "EncDec_dropout",
+        "DilatedConvNet"
     ]
 
     optimizers = [
-        {"optimizer": torch.optim.Adam, "params": {"lr": 1e-4, "weight_decay": 1e-5}}
+        {"optimizer": torch.optim.Adam, "params": {"lr": 1e-4}},
     ]
 
     criterion_functions = [

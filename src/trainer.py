@@ -35,6 +35,7 @@ class Trainer:
         self.test_loader = test_loader
         self.train_transform = train_transform
         self.description = description
+        print(f"Training on device: {self.device}")
     
     
     def train(self) -> List[dict]:
