@@ -1,0 +1,3473 @@
+[
+    {
+        "model_name": "EncDec_base",
+        "description": "EncDec_base",
+        "timestamp": "2024-10-21 00:51:51.410319",
+        "model": "EncDec_base(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.740505599975586,
+            0.9023870468139649,
+            0.9155337333679199,
+            0.9250215530395508,
+            0.9217854499816894
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.752129872639974,
+            0.8187659581502279,
+            0.8090044657389323,
+            0.7844219207763672,
+            0.8548247019449869
+        ],
+        "train_loss": [
+            0.6427874863147736,
+            0.5684989839792252,
+            0.5049197018146515,
+            0.4279106706380844,
+            0.4085218131542206,
+            0.362091164290905,
+            0.2425769403576851,
+            0.21574765145778657,
+            0.19542173072695732,
+            0.18855361193418502
+        ],
+        "test_loss": [
+            0.7023216088612875,
+            0.6930637359619141,
+            0.7337737480799357,
+            0.6310710708300272,
+            0.9114575982093811,
+            0.659239669640859,
+            0.49245569109916687,
+            0.5468634764353434,
+            0.5354134241739908,
+            0.4141202022631963
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.16044592848047615,
+            0.832285213470459,
+            0.8496608793735504,
+            0.8738343000411988,
+            0.8635017335414886
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.700960377852122,
+            0.8067105412483215,
+            0.7898757855097452,
+            0.7494764924049377,
+            0.8546177943547567
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.11748289437964558,
+            0.7143823623657226,
+            0.7410400867462158,
+            0.7773212909698486,
+            0.7615055561065673
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.546878824631373,
+            0.6794202129046122,
+            0.6589126785596212,
+            0.6059276362260183,
+            0.7490971684455872
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.12028304310515522,
+            0.7934112071990966,
+            0.7954579055309295,
+            0.8489573538303375,
+            0.7990043640136719
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5664228697617849,
+            0.7181401252746582,
+            0.6709575454394022,
+            0.6094993948936462,
+            0.7848586042722067
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.999036580324173,
+            0.9563095271587372,
+            0.9721905350685119,
+            0.9656703054904938,
+            0.9829802513122559
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9799181222915649,
+            0.959987223148346,
+            0.9876256386439005,
+            0.9954384366671244,
+            0.9645244677861532
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDecStride",
+        "description": "EncDecStride",
+        "timestamp": "2024-10-21 01:16:27.625630",
+        "model": "EncDecStride(\n  (enc_conv0): Conv2d(3, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv1): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv2): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv3): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv4): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (bottleneck_conv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dec_conv0): ConvTranspose2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv1): ConvTranspose2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv2): ConvTranspose2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv3): ConvTranspose2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv4): ConvTranspose2d(1024, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.7170188903808594,
+            0.8466666221618653,
+            0.9088980674743652,
+            0.9120086669921875,
+            0.9180431365966797,
+            0.9259721755981445
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5294758478800455,
+            0.7871980667114258,
+            0.7740840911865234,
+            0.8114973704020182,
+            0.8014465967814127,
+            0.8367926279703776
+        ],
+        "train_loss": [
+            0.6379475355148315,
+            0.5784565210342407,
+            0.4672879934310913,
+            0.4264717310667038,
+            0.38249724805355073,
+            0.25748642086982726,
+            0.21428214237093926,
+            0.22692799419164658,
+            0.18488727882504463,
+            0.17476795241236687
+        ],
+        "test_loss": [
+            0.7023284633954366,
+            0.7652118802070618,
+            0.7045512994130453,
+            1.2021985252698262,
+            0.7359353005886078,
+            0.6808205644289652,
+            0.95179416735967,
+            0.5740229984124502,
+            0.4098984698454539,
+            0.4159037272135417
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.004861873637673852,
+            0.643821157515049,
+            0.8367601215839386,
+            0.8420073330402374,
+            0.8561247289180756,
+            0.875721913576126
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.08272484689950943,
+            0.7572160561879476,
+            0.7295884688695272,
+            0.7922281622886658,
+            0.7761289874712626,
+            0.8281258543332418
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0024914711139899736,
+            0.5131422221660614,
+            0.7228706181049347,
+            0.7311919093132019,
+            0.7504941284656524,
+            0.7800776898860932
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.043175265192985535,
+            0.6151921848456064,
+            0.5790594617525736,
+            0.6606661677360535,
+            0.6391468048095703,
+            0.7098855574925741
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0024914767019254213,
+            0.5548881106078625,
+            0.7721238791942596,
+            0.7754074096679687,
+            0.7987777531147003,
+            0.8318841457366943
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0431808258096377,
+            0.6333672801653544,
+            0.582113136847814,
+            0.6735778252283732,
+            0.6471262176831564,
+            0.7312204241752625
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999998807907104,
+            0.9759109258651734,
+            0.9757002234458924,
+            0.9803404688835144,
+            0.9769716143608094,
+            0.9777407228946686
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999202291170756,
+            0.9789249300956726,
+            0.9958184758822123,
+            0.9858094652493795,
+            0.9908062219619751,
+            0.9775279959042867
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec_base",
+        "description": "EncDec_base",
+        "timestamp": "2024-10-21 00:52:24.627712",
+        "model": "EncDec_base(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.8156904220581055,
+            0.8962663650512696,
+            0.8953705787658691,
+            0.9095100402832031,
+            0.914588737487793
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.8009138107299805,
+            0.7535886764526367,
+            0.7347997029622396,
+            0.8372955322265625,
+            0.8211638132731119
+        ],
+        "train_loss": [
+            0.6361359000205994,
+            0.5705022394657135,
+            0.5133458435535431,
+            0.44875162541866304,
+            0.4047528564929962,
+            0.3275841474533081,
+            0.2602041155099869,
+            0.2757711157202721,
+            0.221778005361557,
+            0.2184904471039772
+        ],
+        "test_loss": [
+            0.7494055032730103,
+            0.7358171343803406,
+            0.8154693643252054,
+            0.6092890302340189,
+            0.7553128202756246,
+            0.5391598343849182,
+            0.5820298790931702,
+            0.6615930000940958,
+            0.4256279071172078,
+            0.43432117501894635
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.49578371196985244,
+            0.8037866711616516,
+            0.7957274675369262,
+            0.832524698972702,
+            0.8442799389362335
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.7801262338956197,
+            0.6960288087526957,
+            0.658617893854777,
+            0.830185333887736,
+            0.8037019968032837
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.4118448443710804,
+            0.6763519167900085,
+            0.6706263422966003,
+            0.7187220692634583,
+            0.7339423954486847
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6435987750689188,
+            0.5381902555624644,
+            0.49643760919570923,
+            0.7128050525983175,
+            0.6734254558881124
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.45332042649388316,
+            0.7318661212921143,
+            0.719154816865921,
+            0.7615323603153229,
+            0.7875413477420807
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6712852120399475,
+            0.5505782465140024,
+            0.49832624197006226,
+            0.7433628042538961,
+            0.7013651132583618
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9806632697582245,
+            0.9713605523109436,
+            0.9767545163631439,
+            0.9786102890968322,
+            0.9724555611610413
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9636999169985453,
+            0.984904408454895,
+            0.9975993633270264,
+            0.9696669379870096,
+            0.9717486302057902
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 0.001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-21 00:12:50.821286",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.7589577674865723,
+            0.902371883392334,
+            0.9096872329711914,
+            0.9195614814758301,
+            0.9234867095947266
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.7909844716389974,
+            0.7405586242675781,
+            0.7351802190144857,
+            0.7857017517089844,
+            0.8188740412394205
+        ],
+        "train_loss": [
+            0.614231276512146,
+            0.5133747458457947,
+            0.4327841877937317,
+            0.3971082091331482,
+            0.38437784314155576,
+            0.32220650315284727,
+            0.24870097041130065,
+            0.21646304577589034,
+            0.19268635660409927,
+            0.18512593135237693
+        ],
+        "test_loss": [
+            0.87123970190684,
+            1.0657821695009868,
+            1.382210115591685,
+            0.6777749458948771,
+            0.8512803117434183,
+            0.6667538583278656,
+            0.6531632939974467,
+            0.6549189587434133,
+            0.6779772837956747,
+            0.43063490589459735
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.2087046265602112,
+            0.8323969542980194,
+            0.8365267753601074,
+            0.8565849423408508,
+            0.8656804859638214
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.7650691866874695,
+            0.6735628445943197,
+            0.6624383727709452,
+            0.7501228849093119,
+            0.8038747906684875
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1686190903186798,
+            0.7162172615528106,
+            0.7206698596477509,
+            0.7500167489051819,
+            0.7648209214210511
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6214197079340616,
+            0.5144536296526591,
+            0.5025584797064463,
+            0.6052589019139608,
+            0.6772977908452352
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.18449947834014893,
+            0.8163253724575043,
+            0.777001702785492,
+            0.7958746612071991,
+            0.8096201479434967
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6655225952466329,
+            0.5204528669516245,
+            0.5044890840848287,
+            0.6124231517314911,
+            0.6908921202023824
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9909331500530243,
+            0.9469213962554932,
+            0.9718449831008911,
+            0.9773332118988037,
+            0.9758632957935334
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9533742666244507,
+            0.992902676264445,
+            0.9980430006980896,
+            0.9920545220375061,
+            0.9856583873430887
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-21 00:03:53.306888",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(size=32, mode='nearest')\n  (dec_conv0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(size=64, mode='nearest')\n  (dec_conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(size=128, mode='nearest')\n  (dec_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(size=256, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.761359977722168,
+            0.9062459945678711,
+            0.9025364875793457
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.8263632456461588,
+            0.8235801060994467,
+            0.8148549397786459
+        ],
+        "train_loss": [
+            0.6445788860321044,
+            0.5903973400592804,
+            0.5253634095191956,
+            0.4781285792589188,
+            0.4260906606912613,
+            0.3772223949432373,
+            0.350616866350174,
+            0.31557916551828386,
+            0.25088580399751664,
+            0.24598989486694336
+        ],
+        "test_loss": [
+            1.1571590503056843,
+            0.7699209252993265,
+            0.7846347292264303,
+            0.6567220091819763,
+            0.7303243279457092,
+            0.5917443434397379,
+            0.855867326259613,
+            0.5464693705240885,
+            0.43861687183380127,
+            0.40026495854059857
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.21560820937156677,
+            0.837990003824234,
+            0.8217624127864838
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.8149713675181071,
+            0.8119305968284607,
+            0.794705867767334
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.17413205206394194,
+            0.7231449723243714,
+            0.7031722247600556
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6896127065022787,
+            0.6855790217717489,
+            0.6614862084388733
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1834750682115555,
+            0.8207472860813141,
+            0.7827203452587128
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.7310191988945007,
+            0.7254283229509989,
+            0.6836252808570862
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.996033638715744,
+            0.9499722480773926,
+            0.9587729752063752
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9574816226959229,
+            0.9559072454770406,
+            0.9761566122372946
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-21 00:11:06.030023",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(128, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.8575735092163086,
+            0.8595882415771484,
+            0.9143925666809082,
+            0.9129683494567871
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5158001581827799,
+            0.8222735722859701,
+            0.7988135019938151,
+            0.8071238199869791,
+            0.8050991694132487
+        ],
+        "train_loss": [
+            0.6471979796886445,
+            0.5555086612701416,
+            0.4763571202754974,
+            0.42958628833293916,
+            0.3856864333152771,
+            0.36188890039920807,
+            0.32051700353622437,
+            0.32140482068061826,
+            0.22680478692054748,
+            0.2111964762210846
+        ],
+        "test_loss": [
+            0.7324749628702799,
+            0.7549485762914022,
+            0.8709123531977335,
+            0.5943920214970907,
+            0.8218405644098917,
+            0.5986163914203644,
+            0.41109875837961835,
+            0.42889291048049927,
+            0.5673403839270273,
+            0.45660431186358136
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.654382449388504,
+            0.7136849850416184,
+            0.8488653779029847,
+            0.8446489632129669
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.036945209838449955,
+            0.8150786956151327,
+            0.7759318947792053,
+            0.7860569556554159,
+            0.7841093341509501
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.529182517528534,
+            0.56522057056427,
+            0.7390748143196106,
+            0.7324160695075989
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.019488255609758198,
+            0.6895457903544108,
+            0.640462746222814,
+            0.6509609222412109,
+            0.6512205402056376
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5645870268344879,
+            0.6325681120157242,
+            0.7992050051689148,
+            0.7960767686367035
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.019488255609758198,
+            0.7585988839467367,
+            0.657468318939209,
+            0.6753154993057251,
+            0.6628697514533997
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9803764581680298,
+            0.9645057320594788,
+            0.969593757390976,
+            0.9709976255893707
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9291898409525553,
+            0.9822373787562052,
+            0.9752721985181173,
+            0.9875058730443319
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec_dropout",
+        "description": "EncDec_dropout",
+        "timestamp": "2024-10-21 01:01:11.442083",
+        "model": "EncDec_dropout(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dropout): Dropout(p=0.2, inplace=False)\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.814388370513916,
+            0.9038958549499512,
+            0.9128369331359864
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.7948904037475586,
+            0.7193597157796224,
+            0.7972036997477213
+        ],
+        "train_loss": [
+            0.6278839468955993,
+            0.5543052047491074,
+            0.5123017400503158,
+            0.4750948041677475,
+            0.41338041722774505,
+            0.37925034761428833,
+            0.3513480514287949,
+            0.2870859235525131,
+            0.23388353288173674,
+            0.2085871383547783
+        ],
+        "test_loss": [
+            0.7124365568161011,
+            0.9730072021484375,
+            0.7080237666765848,
+            0.6636380751927694,
+            0.7994716564814249,
+            0.8551955024401346,
+            0.8507960339387258,
+            0.5436955491701762,
+            0.6401222844918569,
+            0.6033073167006174
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.48981553353369234,
+            0.8287532806396485,
+            0.8439189314842224
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.7722836136817932,
+            0.6294853885968527,
+            0.7693628470102946
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.38942877285880967,
+            0.7098365008831025,
+            0.7320425987243653
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6331735253334045,
+            0.46475597222646076,
+            0.629148026307424
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.40685806804103775,
+            0.7872840523719787,
+            0.7817681849002838
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6687243978182474,
+            0.4679635167121887,
+            0.6445300579071045
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9912584364414215,
+            0.9616447389125824,
+            0.9755704760551452
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9618732333183289,
+            0.9946773449579874,
+            0.9841620922088623
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-21 00:12:02.678058",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.7406281471252442,
+            0.8991460800170898,
+            0.8903820037841796,
+            0.9142002105712891
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.8104397455851237,
+            0.717315673828125,
+            0.762232780456543,
+            0.7864446640014648
+        ],
+        "train_loss": [
+            0.6443209290504456,
+            0.5736735045909882,
+            0.4975920468568802,
+            0.4562676429748535,
+            0.4170660048723221,
+            0.37425358295440675,
+            0.3195431277155876,
+            0.24943548887968064,
+            0.2785849317908287,
+            0.22520242184400557
+        ],
+        "test_loss": [
+            0.721565326054891,
+            0.7535160382588705,
+            0.8445480664571127,
+            0.6285479863484701,
+            0.7689486742019653,
+            0.8441066940625509,
+            0.580043355623881,
+            0.7096611360708872,
+            0.5635458131631216,
+            0.5123231112957001
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1395868269726634,
+            0.8163224816322326,
+            0.7853201806545258,
+            0.8464968025684356
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.7921243111292521,
+            0.6261007984479269,
+            0.7107426325480143,
+            0.7533561984697977
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.10826245881617069,
+            0.6941058576107025,
+            0.6544238954782486,
+            0.736151522397995
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.65728360414505,
+            0.46234604716300964,
+            0.5568344096342722,
+            0.6107051273187002
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.12178128696978092,
+            0.7736368238925934,
+            0.7080030322074891,
+            0.7943382740020752
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.7005600531895956,
+            0.46426572402318317,
+            0.5631530483563741,
+            0.618292361497879
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9937964379787445,
+            0.9565518379211426,
+            0.9735861837863922,
+            0.9707642495632172
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9555999040603638,
+            0.9978171785672506,
+            0.9921139478683472,
+            0.9917827447255453
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-21 00:15:10.425387",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.7423795700073242,
+            0.9035956382751464,
+            0.9067561149597168,
+            0.9174812316894532,
+            0.9231218338012696
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.7897812525431315,
+            0.7149276733398438,
+            0.7824099858601888,
+            0.8342870076497396,
+            0.7823149363199869
+        ],
+        "train_loss": [
+            0.623995327949524,
+            0.5299490869045258,
+            0.440767440199852,
+            0.41585280895233157,
+            0.4053588271141052,
+            0.3457676813006401,
+            0.24498866349458695,
+            0.22177176773548127,
+            0.1989533483982086,
+            0.1947127804160118
+        ],
+        "test_loss": [
+            0.8745353817939758,
+            0.6595643162727356,
+            0.8682289520899454,
+            1.0408886869748433,
+            1.0967187285423279,
+            0.5332885285218557,
+            0.6487685342629751,
+            0.6979566117127737,
+            0.42400529980659485,
+            0.5770618518193563
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1303890820592642,
+            0.8309947729110718,
+            0.8201413810253143,
+            0.8509105145931244,
+            0.8722425162792206
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.767528216044108,
+            0.6211484869321188,
+            0.7441935539245605,
+            0.8257046341896057,
+            0.7436347405115763
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.10100629515945911,
+            0.7122916340827942,
+            0.6999491512775421,
+            0.7427503883838653,
+            0.7742483258247376
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6264254450798035,
+            0.4569314420223236,
+            0.5974267025788625,
+            0.7075278361638387,
+            0.5972287754217783
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.10440406091511249,
+            0.8047694802284241,
+            0.7375173151493073,
+            0.7791678726673126,
+            0.8527898192405701
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6748214761416117,
+            0.4596023956934611,
+            0.6040312548478445,
+            0.7248053153355917,
+            0.5992499788602194
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.998412573337555,
+            0.9518767774105072,
+            0.9807921290397644,
+            0.9805477023124695,
+            0.9655858457088471
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.951062003771464,
+            0.9965469638506571,
+            0.9930821458498637,
+            0.982140858968099,
+            0.9976806243260702
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-21 00:09:33.330579",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.8022252082824707,
+            0.893959903717041,
+            0.8991084098815918
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.7479696273803711,
+            0.7339022954305013,
+            0.7420514424641927
+        ],
+        "train_loss": [
+            0.677991408109665,
+            0.5848416805267334,
+            0.5502482354640961,
+            0.4909247159957886,
+            0.43227249681949614,
+            0.405063197016716,
+            0.3756834089756012,
+            0.3163476586341858,
+            0.30392965823411944,
+            0.24618976265192033
+        ],
+        "test_loss": [
+            0.7204950451850891,
+            0.7171459992726644,
+            0.6840190092722574,
+            0.6591663360595703,
+            0.9416223565737406,
+            0.5941371917724609,
+            0.7408331533273061,
+            0.7756479481856028,
+            0.6699694395065308,
+            0.6725097298622131
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.3675823702593334,
+            0.8030293345451355,
+            0.8136824667453766
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6842238903045654,
+            0.6565842429796854,
+            0.6700069506963094
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.29842719170555937,
+            0.6778804808855057,
+            0.6892155051231384
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5243812700112661,
+            0.4936658442020416,
+            0.507219543059667
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.31378836850926745,
+            0.7539439022541046,
+            0.7446078896522522
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5313218633333842,
+            0.49693939089775085,
+            0.5151122808456421
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9901234269142151,
+            0.9579657018184662,
+            0.9726947784423828
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9931766192118326,
+            0.9962831536928812,
+            0.9919660290082296
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDecStride",
+        "description": "EncDecStride",
+        "timestamp": "2024-10-21 01:17:38.801221",
+        "model": "EncDecStride(\n  (enc_conv0): Conv2d(3, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv1): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv2): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv3): Conv2d(1024, 2048, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv4): Conv2d(2048, 2048, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (bottleneck_conv): Conv2d(2048, 2048, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dec_conv0): ConvTranspose2d(2048, 2048, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv1): ConvTranspose2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv2): ConvTranspose2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv3): ConvTranspose2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv4): ConvTranspose2d(1024, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.717292594909668,
+            0.8570894241333008,
+            0.8965239524841309,
+            0.9167391777038574,
+            0.9087186813354492,
+            0.9094810485839844
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5561402638753256,
+            0.7471294403076172,
+            0.7600084940592448,
+            0.8337882359822592,
+            0.7982311248779297,
+            0.7339938481648763
+        ],
+        "train_loss": [
+            0.652319747209549,
+            0.6180927872657775,
+            0.5845735013484955,
+            0.4823719084262848,
+            0.4435922920703888,
+            0.2868571162223816,
+            0.23857295662164688,
+            0.21413337141275407,
+            0.2197642520070076,
+            0.19183273389935493
+        ],
+        "test_loss": [
+            0.7080428202946981,
+            0.7317634423573812,
+            0.8120120763778687,
+            1.6380314429601033,
+            0.8097087343533834,
+            0.5187562704086304,
+            0.5204949478308359,
+            0.43697292109330493,
+            0.5307794213294983,
+            0.5891121327877045
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.008698619622737169,
+            0.6963406354188919,
+            0.8035844027996063,
+            0.8529659867286682,
+            0.8385478794574738,
+            0.8341431260108948
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.20097002883752188,
+            0.6866794029871622,
+            0.7063947717348734,
+            0.8266704877217611,
+            0.7687239845593771,
+            0.6647156079610189
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0044881895184516905,
+            0.5529882743954658,
+            0.6743203043937683,
+            0.7460641622543335,
+            0.726508378982544,
+            0.7176120400428772
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.11330852036674817,
+            0.5301412145296732,
+            0.5517433186372122,
+            0.707863450050354,
+            0.6280345718065897,
+            0.5082562367121378
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.004490092070773244,
+            0.6076277598738671,
+            0.7164050698280334,
+            0.7941742300987243,
+            0.7899964272975921,
+            0.7586241483688354
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.11354530230164528,
+            0.5352171460787455,
+            0.554497649272283,
+            0.7428478399912516,
+            0.635416309038798,
+            0.5104663372039795
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999813616275788,
+            0.9672605097293854,
+            0.9792299807071686,
+            0.9760400772094726,
+            0.9689422488212586,
+            0.9782077193260192
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9988705118497213,
+            0.9940390189488729,
+            0.9966925382614136,
+            0.9638351599375407,
+            0.9902055660883585,
+            0.997159461180369
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec_base",
+        "description": "EncDec_base",
+        "timestamp": "2024-10-21 00:52:56.359903",
+        "model": "EncDec_base(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.7647530555725097,
+            0.8424042701721192,
+            0.8666847229003907
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.7581313451131185,
+            0.7402362823486328,
+            0.7243420282999674
+        ],
+        "train_loss": [
+            0.6860508978366852,
+            0.6155408620834351,
+            0.5813435614109039,
+            0.5386606693267822,
+            0.469737309217453,
+            0.4096540540456772,
+            0.4748368561267853,
+            0.40476250648498535,
+            0.3939759612083435,
+            0.34076506495475767
+        ],
+        "test_loss": [
+            0.6926503578821818,
+            0.7307422161102295,
+            0.7447818915049235,
+            0.6788535714149475,
+            0.7483417391777039,
+            0.8719735344250997,
+            0.6112730105717977,
+            0.48453425367673236,
+            0.48334237933158875,
+            0.6152489682038625
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.28403836851939557,
+            0.6567766010761261,
+            0.7327836275100708
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.7215400536855062,
+            0.695833146572113,
+            0.6522619525591532
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.22400922949891539,
+            0.5027755498886108,
+            0.5831593036651611
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5655388633410136,
+            0.5368825197219849,
+            0.4880128304163615
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.2733844148693606,
+            0.5757399469614028,
+            0.6571388989686966
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6252667506535848,
+            0.5909109910329183,
+            0.5129580795764923
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9762801110744477,
+            0.9541588544845581,
+            0.9525969326496124
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9214248657226562,
+            0.9229771494865417,
+            0.9597206314404806
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 0.01
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec_dropout",
+        "description": "EncDec_dropout",
+        "timestamp": "2024-10-21 01:05:39.902459",
+        "model": "EncDec_dropout(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dropout): Dropout(p=0.5, inplace=False)\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.7170254707336425,
+            0.8682375907897949,
+            0.8892410278320313,
+            0.9040351867675781
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5245936711629232,
+            0.7866303126017252,
+            0.8058837254842123,
+            0.7233721415201823
+        ],
+        "train_loss": [
+            0.6256783425807952,
+            0.5546042323112488,
+            0.46130664348602296,
+            0.4254713624715805,
+            0.40961122512817383,
+            0.3633864402770996,
+            0.33320569396018984,
+            0.26739735156297684,
+            0.24744605273008347,
+            0.24492959678173065
+        ],
+        "test_loss": [
+            0.684611976146698,
+            0.6530010302861532,
+            0.6858615676561991,
+            0.5947729647159576,
+            0.6416055560112,
+            0.6958087285359701,
+            0.8207111954689026,
+            0.5052826603253683,
+            0.5097454488277435,
+            0.5421580870946249
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.005428771567721924,
+            0.6967888742685318,
+            0.7716641187667846,
+            0.8180237591266633
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.06640473008155823,
+            0.756870706876119,
+            0.7828998963038126,
+            0.6354554494222006
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.002763967781447718,
+            0.570216491818428,
+            0.638896369934082,
+            0.6981546729803085
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.03449711079398791,
+            0.6133679548899332,
+            0.6448554992675781,
+            0.4697696963946025
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.002764091647350142,
+            0.6586830422282219,
+            0.6793812990188599,
+            0.766680759191513
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.03449711079398791,
+            0.6374709208806356,
+            0.6753005385398865,
+            0.470768262942632
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999963700771332,
+            0.9477540969848632,
+            0.977159833908081,
+            0.9623481869697571
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9735105633735657,
+            0.9636075099309286,
+            0.9989425937334696
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDecStride",
+        "description": "EncDecStride",
+        "timestamp": "2024-10-21 01:09:31.838174",
+        "model": "EncDecStride(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dec_conv0): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv1): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv2): ConvTranspose2d(512, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv3): ConvTranspose2d(256, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.7161717414855957,
+            0.7647924423217773
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.509837786356608,
+            0.6321147282918295
+        ],
+        "train_loss": [
+            0.6971945345401764,
+            0.57340167760849,
+            0.48235248029232025,
+            0.44173845946788787,
+            0.3936592072248459,
+            0.3636130064725876,
+            0.4107022285461426,
+            0.3797046631574631,
+            0.3521855190396309,
+            0.294780308008194
+        ],
+        "test_loss": [
+            0.8930607636769613,
+            0.7616662979125977,
+            0.6895580887794495,
+            0.8209142486254374,
+            0.7734827399253845,
+            0.6635257601737976,
+            0.5836201310157776,
+            0.539243201414744,
+            0.6504432757695516,
+            0.9628019134203593
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.879765524994582e-05,
+            0.2912358324509114
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0043466210675736265,
+            0.4295096198717753
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.4400901272892952e-05,
+            0.1866189923370257
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.002178131175848345,
+            0.27688567340373993
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.4400901272892952e-05,
+            0.1918160418048501
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0021781314086789885,
+            0.27783054610093433
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9940365791320801
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999403953552,
+            0.9982755780220032
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDecStride",
+        "description": "EncDecStride",
+        "timestamp": "2024-10-21 01:12:10.034904",
+        "model": "EncDecStride(\n  (enc_conv0): Conv2d(3, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dec_conv0): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv1): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv2): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv3): ConvTranspose2d(512, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.7173604965209961,
+            0.7527371406555176
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5206197102864584,
+            0.5932223002115885
+        ],
+        "train_loss": [
+            0.6777716815471649,
+            0.5720868527889251,
+            0.5129196524620057,
+            0.4415316253900528,
+            0.4022446870803833,
+            0.36782951056957247,
+            0.32793024778366087,
+            0.3437728673219681,
+            0.3223114162683487,
+            0.29268172234296796
+        ],
+        "test_loss": [
+            0.7440798282623291,
+            0.6948974927266439,
+            0.6783348321914673,
+            0.962113598982493,
+            0.6680260300636292,
+            0.6465152104695638,
+            0.5927526950836182,
+            0.7170198361078898,
+            0.7131315767765045,
+            0.6822099884351095
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.010788297512044664,
+            0.24547048136591912
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.04672597969571749,
+            0.3109099169572194
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.005598398667643778,
+            0.1444566622376442
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.02396583743393421,
+            0.18489748239517212
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.005607265603612177,
+            0.14659576900303364
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.02396583743393421,
+            0.18542395532131195
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999469935894012,
+            0.9963113963603973
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999602635702,
+            0.9982752203941345
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDecStride",
+        "description": "EncDecStride",
+        "timestamp": "2024-10-21 01:14:25.703580",
+        "model": "EncDecStride(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv2): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv4): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dec_conv0): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv1): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv2): ConvTranspose2d(512, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv3): ConvTranspose2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv4): ConvTranspose2d(256, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.508763313293457
+        ],
+        "train_loss": [
+            0.6682517886161804,
+            0.6347952365875245,
+            0.5937339186668396,
+            0.5325107872486115,
+            0.453146356344223,
+            0.4014356404542923,
+            0.38099794983863833,
+            0.38229272067546843,
+            0.35294402539730074,
+            0.3352761000394821
+        ],
+        "test_loss": [
+            0.702592114607493,
+            0.7167526086171468,
+            0.6979408065478007,
+            0.6524555285771688,
+            0.6718966166178385,
+            0.8437059124310812,
+            0.9358253677686056,
+            0.6873593827088674,
+            0.7562596599260966,
+            0.7080130577087402
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0630953814446306e-05
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            5.315561793395318e-06
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            5.315561793395318e-06
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "TestCNN",
+        "description": "TestCNN",
+        "timestamp": "2024-10-20 23:43:37.434975",
+        "model": "TestCNN(\n  (conv): Sequential(\n    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n    (1): ReLU()\n    (2): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  )\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.680703854560852,
+            0.6461867034435272
+        ],
+        "test_loss": [
+            0.6813942392667135,
+            0.6744142174720764
+        ],
+        "train_dice": [
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0
+        ],
+        "epochs": 2,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 1e-05
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-20 23:45:10.979786",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(size=32, mode='nearest')\n  (dec_conv0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(size=64, mode='nearest')\n  (dec_conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(size=128, mode='nearest')\n  (dec_conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(size=256, mode='nearest')\n  (dec_conv3): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.690319973230362,
+            0.680258572101593
+        ],
+        "test_loss": [
+            0.692782441775004,
+            0.6914565165837606
+        ],
+        "train_dice": [
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0
+        ],
+        "epochs": 2,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 1e-05
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "TestCNN",
+        "description": "TestCNN",
+        "timestamp": "2024-10-20 23:50:31.111018",
+        "model": "TestCNN(\n  (conv): Sequential(\n    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n    (1): ReLU()\n    (2): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  )\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.7081293940544129,
+            0.6679115056991577
+        ],
+        "test_loss": [
+            0.696274975935618,
+            0.6890886823336283
+        ],
+        "train_dice": [
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0
+        ],
+        "epochs": 2,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 1e-05
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-20 23:50:32.766584",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(size=32, mode='nearest')\n  (dec_conv0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(size=64, mode='nearest')\n  (dec_conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(size=128, mode='nearest')\n  (dec_conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(size=256, mode='nearest')\n  (dec_conv3): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.6865390360355377,
+            0.6741021335124969
+        ],
+        "test_loss": [
+            0.6926490863164266,
+            0.6927546660105387
+        ],
+        "train_dice": [
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0
+        ],
+        "epochs": 2,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 1e-05
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "TestCNN",
+        "description": "TestCNN",
+        "timestamp": "2024-10-20 23:55:16.242822",
+        "model": "TestCNN(\n  (conv): Sequential(\n    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n    (1): ReLU()\n    (2): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  )\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.7003530621528625,
+            0.6665368676185608
+        ],
+        "test_loss": [
+            0.6893524130185446,
+            0.6817854642868042
+        ],
+        "train_dice": [
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0
+        ],
+        "epochs": 2,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 1e-05
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-20 23:55:17.825943",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(size=32, mode='nearest')\n  (dec_conv0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(size=64, mode='nearest')\n  (dec_conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(size=128, mode='nearest')\n  (dec_conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(size=256, mode='nearest')\n  (dec_conv3): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.6815397560596466,
+            0.6715793013572693
+        ],
+        "test_loss": [
+            0.692628026008606,
+            0.6929877599080404
+        ],
+        "train_dice": [
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0
+        ],
+        "epochs": 2,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001,
+                "weight_decay": 1e-05
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec",
+        "description": "EncDec",
+        "timestamp": "2024-10-21 00:02:42.783222",
+        "model": "EncDec(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(size=32, mode='nearest')\n  (dec_conv0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(size=64, mode='nearest')\n  (dec_conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(size=128, mode='nearest')\n  (dec_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(size=256, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.6558750569820404,
+            0.5598740875720978
+        ],
+        "test_loss": [
+            0.9335978031158447,
+            0.7608555555343628
+        ],
+        "train_dice": [
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0
+        ],
+        "epochs": 2,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDecStride",
+        "description": "EncDecStride",
+        "timestamp": "2024-10-21 01:13:26.033867",
+        "model": "EncDecStride(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv4): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dec_conv0): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv1): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv2): ConvTranspose2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv3): ConvTranspose2d(512, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv4): ConvTranspose2d(256, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.7253709733486176,
+            0.6380551874637603,
+            0.5492743700742722,
+            0.48769457042217257,
+            0.438593590259552,
+            0.3804080694913864,
+            0.3517262876033783,
+            0.3463424861431122,
+            0.3320036917924881,
+            0.31001900136470795
+        ],
+        "test_loss": [
+            0.7334774335225424,
+            0.7625028093655905,
+            0.6768935918807983,
+            0.600458006064097,
+            0.5842140913009644,
+            0.7719185551007589,
+            0.7060933709144592,
+            0.9211493333180746,
+            0.8303905626138052,
+            0.7122330466906229
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDecStride",
+        "description": "EncDecStride",
+        "timestamp": "2024-10-21 01:15:33.857739",
+        "model": "EncDecStride(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv3): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (enc_conv4): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))\n  (bottleneck_conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (dec_conv0): ConvTranspose2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv1): ConvTranspose2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv2): ConvTranspose2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv3): ConvTranspose2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n  (dec_conv4): ConvTranspose2d(256, 1, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), output_padding=(1, 1))\n)",
+        "train_acc": [
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625,
+            0.716168212890625
+        ],
+        "test_acc": [
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914,
+            0.5087594985961914
+        ],
+        "train_loss": [
+            0.6624415516853333,
+            0.634686678647995,
+            0.6008873879909515,
+            0.5471851468086243,
+            0.45912971198558805,
+            0.41668333411216735,
+            0.4173707902431488,
+            0.41732814013957975,
+            0.39390676468610764,
+            0.3877334088087082
+        ],
+        "test_loss": [
+            0.6950588623682658,
+            0.7917154431343079,
+            0.7862035433451334,
+            0.7878437836964926,
+            0.7777318755785624,
+            0.67494797706604,
+            0.6450219750404358,
+            0.6259543001651764,
+            0.6139023005962372,
+            0.9280621210734049
+        ],
+        "train_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_dice": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "train_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_iou": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "train_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_sensitivity": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "train_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "test_specificity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "BCEWithLogitsLoss",
+        "transform": "JointBaseTransform()"
+    },
+    {
+        "model_name": "EncDec_base",
+        "description": "EncDec_base",
+        "timestamp": "2024-10-21 00:44:16.490485",
+        "model": "EncDec_base(\n  (enc_conv0): Conv2d(3, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (enc_conv3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (pool3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)\n  (bottleneck_conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample0): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample1): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample2): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv2): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n  (upsample3): Upsample(scale_factor=2.0, mode='nearest')\n  (dec_conv3): Conv2d(256, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))\n)",
+        "train_acc": [
+            0.47426786422729494,
+            0.26910953521728515,
+            0.26910953521728515,
+            0.26910953521728515,
+            0.26910953521728515,
+            0.26910953521728515,
+            0.26910953521728515,
+            0.26910953521728515,
+            0.26910953521728515,
+            0.26910953521728515
+        ],
+        "test_acc": [
+            0.4760748545328776,
+            0.4760745366414388,
+            0.4760745366414388,
+            0.4760745366414388,
+            0.4760745366414388,
+            0.4760745366414388,
+            0.4760745366414388,
+            0.4760745366414388,
+            0.4760745366414388,
+            0.4760745366414388
+        ],
+        "train_loss": [
+            -0.5876163870096207,
+            -666.838309955597,
+            -47295.171704101565,
+            -1104636.1296875,
+            -18868543.95,
+            -180260973.2,
+            -1424566585.6,
+            -8231265177.6,
+            -39528377548.8,
+            -164944896000.0
+        ],
+        "test_loss": [
+            -27.985939025878906,
+            -7152.213541666667,
+            -365695.5833333333,
+            -8058928.166666667,
+            -104037930.66666667,
+            -932618517.3333334,
+            -6240714240.0,
+            -33476494677.333332,
+            -151133194922.66666,
+            -592026948949.3334
+        ],
+        "train_dice": [
+            0.2164724361151457,
+            0.43142745196819304,
+            0.43097340166568754,
+            0.42969631254673,
+            0.4319292396306992,
+            0.43070044219493864,
+            0.43110262155532836,
+            0.4309854954481125,
+            0.4310405939817429,
+            0.4322523057460785
+        ],
+        "test_dice": [
+            0.6363405585289001,
+            0.6363404194513956,
+            0.6363404194513956,
+            0.6363404194513956,
+            0.6363404194513956,
+            0.6363404194513956,
+            0.6363404194513956,
+            0.6363404194513956,
+            0.6363404194513956,
+            0.6363404194513956
+        ],
+        "train_iou": [
+            0.13733745012432336,
+            0.27656674981117246,
+            0.2765667408704758,
+            0.27656675279140475,
+            0.27656674534082415,
+            0.27656674236059187,
+            0.27656675428152083,
+            0.27656674683094024,
+            0.27656674981117246,
+            0.27656675726175306
+        ],
+        "test_iou": [
+            0.4837500552336375,
+            0.4837498366832733,
+            0.4837498366832733,
+            0.4837498366832733,
+            0.4837498366832733,
+            0.4837498366832733,
+            0.4837498366832733,
+            0.4837498366832733,
+            0.4837498366832733,
+            0.4837498366832733
+        ],
+        "train_sensitivity": [
+            0.5012931814417243,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "test_sensitivity": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "train_specificity": [
+            0.4858145238933503,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "test_specificity": [
+            1.1258654618965618e-06,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "epochs": 10,
+        "optimizer_config": {
+            "optimizer": "<class 'torch.optim.adam.Adam'>",
+            "params": {
+                "lr": 0.0001
+            }
+        },
+        "criterion": "function",
+        "transform": "JointBaseTransform()"
+    }
+]
