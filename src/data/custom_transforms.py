@@ -6,7 +6,7 @@ from PIL import Image
 
 
 class JointBaseTransform(torch.nn.Module):
-    def __init__(self, size: int = 256):
+    def __init__(self, size: int = 512):
         super().__init__()
         self.size = size
         self.transform = transforms.Compose([
@@ -24,7 +24,7 @@ class JointBaseTransform(torch.nn.Module):
 
 
 class JointRandomTransforms(torch.nn.Module):
-    def __init__(self, size: int = 256, horizontal_p=0.5, vertical_p=0.5, rotation_degree=30, perspective_p=0.5):
+    def __init__(self, size: int = 512, horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0.5):
         super().__init__()
         self.size = size
         self.horizontal_p = horizontal_p
@@ -69,18 +69,18 @@ class JointRandomTransforms(torch.nn.Module):
                 f"perspective_p={self.perspective_p})")
 
 
-def base_transform(size: int = 256):
+def base_transform(size: int = 512):
     return JointBaseTransform(size=size)
 
 
 def random_transform(
-    size: int = 256,
+    size: int = 512,
     horizontal: bool = False,
     horizontal_p: float = 0.5,
     vertical: bool = False,
     vertical_p: float = 0.5,
     rotation: bool = False,
-    rotation_degree: int = 30,
+    rotation_degree: int = 90,
     perspective: bool = False,
     perspective_p: float = 0.5,
 ):
