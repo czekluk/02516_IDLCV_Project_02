@@ -114,7 +114,9 @@ class Trainer:
                 optimizer.step()
                 
                 train_loss.append(loss.item())
-                predicted = (output > 0.5).float()
+                sigmoid_output = torch.sigmoid(output)
+                predicted = (sigmoid_output > 0.5).float()
+                
                 train_acc.append(accuracy(predicted, target).cpu().item())
                 train_dice.append(dice_overlap(predicted, target).cpu().item())
                 train_iou.append(intersection_over_union(predicted, target).cpu().item())
