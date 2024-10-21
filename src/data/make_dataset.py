@@ -1,5 +1,6 @@
 import os
 import glob
+import torch
 import PIL.Image as Image
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
@@ -95,7 +96,12 @@ class SegmentationDataset(Dataset):
         
         # apply the same transform to both input and target
         x, y = self.transform(input_image, target_image)
-        return x, y
+        
+        target_array = np.array(y)
+        binary_target = (target_array > 0).astype(np.uint8)
+        binary_target_tensor = torch.from_numpy(binary_target).float()
+        
+        return x, binary_target_tensor
 
 
 class SegmentationDataModule:
@@ -224,7 +230,7 @@ def test_drive():
     drive_dir = os.path.join(data_dir, "DRIVE")
     print("Data directory: ", drive_dir)
 
-    img_size = 500
+    img_size = 512
     train_transform = random_transform(size=img_size, horizontal=True, rotation=True)
     test_transform = base_transform(size=img_size)
 
@@ -243,7 +249,7 @@ def test_ph2():
     ph2_data_dir = os.path.join(data_dir, "PH2_Dataset_images")
     print("Data directory: ", ph2_data_dir)
 
-    img_size = 500
+    img_size = 512
     train_transform = random_transform(size=img_size, horizontal=True, rotation=True)
     test_transform = base_transform(size=img_size)
 
