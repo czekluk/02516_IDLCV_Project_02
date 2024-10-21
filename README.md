@@ -35,19 +35,19 @@ To abort the run:
 bkill <job-id>
 ```
 
-## To Do's
+## ToDo V2
+- (\ ( ͠° ͟ل͜ ͡°) /) T R A I N (\ ( ͠° ͟ل͜ ͡°) /) - Nandor & Zeljko
 
-- Dataloaders -> Filip
-- Analysis of data -> Filip
-- Data-preprocessing (e.g. subsampling of images) -> Filip
-- Encoder-Decoder Architecture -> Nandor
-- UNet Architecture -> Zeljko
-- Training loop -> Lukas
-- Performance metrics -> Alex
-- Results & Visualisation -> Alex
-- Ablation study -> Lukas
+- DRIVE Dataset: how to deal with images? - Filip
+  - Should be same input size for both datasets (512x512) 
+  - Data Augmentation: random rotate, random flip
 
-Next Meeting Monday 18:00
+- Save dataset & transforms in results - Lukas
+- Make the label binary in `make_dataset.py` - Filip
+- Finish visualizer `load_model` and `plot_prediction` - Alex
+- Ablation study (models with different loss functions) - Lukas
+
+Next meeting Thursday 14:00 (24.10.2025)
 
 ## Submission Deadline
 
