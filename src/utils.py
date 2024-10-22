@@ -4,7 +4,7 @@ import os
 
 PROJECT_BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-def save_results(outputs, path=os.path.join(PROJECT_BASE_DIR, "results/experiments.json")):
+def save_results(outputs, path=os.path.join(PROJECT_BASE_DIR, "results/experiments.json"), data_path=PROJECT_BASE_DIR):
     """
     Saves the best model from outputs (the parameters).
     Saves all of the results into a results/experiments.json
@@ -36,6 +36,7 @@ def save_results(outputs, path=os.path.join(PROJECT_BASE_DIR, "results/experimen
             output["transform"] = str(output["transform"])
         if "timestamp" in output:
             output["timestamp"] = str(output["timestamp"])
+    output["data"] = data_path
     
     data.extend(outputs)
     # sort the entries

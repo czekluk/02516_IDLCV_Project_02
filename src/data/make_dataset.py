@@ -129,6 +129,7 @@ class SegmentationDataModule:
         assert train_split < 1, "train_split needs to be less than 1"
         assert train_split > 0, "train_split needs to be more than 0"
         self.batch_size = batch_size
+        self.data_path = data_path
         self.train_dataset = SegmentationDataset(
             train=True, transform=train_transform, data_path=data_path, drive=drive, train_split=train_split
         )

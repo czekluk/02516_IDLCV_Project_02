@@ -7,6 +7,7 @@ from data.custom_transforms import base_transform, random_transform
 from data.make_dataset import SegmentationDataModule
 from models.test_cnn import TestCNN
 from models.encoder_decoder import EncDec_base, EncDecStride, EncDec_dropout, DilatedConvNet
+from models.unet import UNetDeconv, UNetDilated
 
 PROJECT_BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,28 +18,23 @@ DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
 
 def test_experiment(epochs=10):
     """Experiment to test the Code using the TestCNN model"""
-    train_transform = base_transform(size=256)
-    test_transform = base_transform(size=256)
-    dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR)
+    train_transform = random_transform(size=512, horizontal=True, vertical=True, rotation=True)
+    test_transform = base_transform(size=512)
+    # dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
+    dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
     trainloader = dm.train_dataloader()
     testloader = dm.test_dataloader()
 
     models = [
-        EncDec_base,
-        EncDecStride,
-        EncDec_dropout,
-        DilatedConvNet
+        UNetDeconv
     ]
 
     description = [
-        "EncDec_base",
-        "EncDecStride",
-        "EncDec_dropout",
-        "DilatedConvNet"
+        "Testing"
     ]
 
     optimizers = [
-        {"optimizer": torch.optim.Adam, "params": {"lr": 1e-4}},
+        {"optimizer": torch.optim.Adam, "params": {"lr": 1e-3}},
     ]
 
     criterion_functions = [
@@ -47,6 +43,7 @@ def test_experiment(epochs=10):
 
     epochs = [epochs]
 
+    print(f"Training on dataset {dm.data_path}")
     trainer = Trainer(models, optimizers, epochs, trainloader, testloader, train_transform, description, criterion_functions)
     outputs = trainer.train()
-    save_results(outputs, os.path.join(PROJECT_BASE_DIR, "results/experiments.json"))
+    save_results(outputs, os.path.join(PROJECT_BASE_DIR, "results/experiments.json"), dm.data_path)
