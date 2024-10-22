@@ -8,6 +8,8 @@ from data.make_dataset import SegmentationDataModule
 from models.test_cnn import TestCNN
 from models.encoder_decoder import EncDec_base, EncDecStride, EncDec_dropout, DilatedConvNet
 from models.unet import UNetDeconv, UNetDilated
+from loss_functions.focal_loss import BFLWithLogits
+from loss_functions.dice_loss import BDLWithLogits
 
 PROJECT_BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,8 +22,8 @@ def test_experiment(epochs=10):
     """Experiment to test the Code using the TestCNN model"""
     train_transform = random_transform(size=512, horizontal=True, vertical=True, rotation=True)
     test_transform = base_transform(size=512)
-    # dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
-    dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
+    dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
+    # dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
     trainloader = dm.train_dataloader()
     testloader = dm.test_dataloader()
 
@@ -37,8 +39,13 @@ def test_experiment(epochs=10):
         {"optimizer": torch.optim.Adam, "params": {"lr": 1e-3}},
     ]
 
+    # Loss functions that are working:
+    # Binary Cross Entropy: torch.nn.BCEWithLogitsLoss()
+    # Focal Loss: BFLWithLogits()
+    # Binary Cross Entropy with Weights: torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor([2.0]).cuda())
+    # Binary Dice Loss: BDLWithLogits()
     criterion_functions = [
-        torch.nn.BCEWithLogitsLoss()
+        BFLWithLogits()
     ]
 
     epochs = [epochs]
