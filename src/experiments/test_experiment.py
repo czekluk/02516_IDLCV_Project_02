@@ -45,7 +45,7 @@ def test_experiment(epochs=10):
     # Binary Cross Entropy with Weights: torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor([2.0]).cuda())
     # Binary Dice Loss: BDLWithLogits()
     criterion_functions = [
-        BFLWithLogits()
+        torch.nn.BCEWithLogitsLoss()
     ]
 
     epochs = [epochs]
