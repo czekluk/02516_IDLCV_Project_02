@@ -21,6 +21,10 @@ class JointBaseTransform(torch.nn.Module):
         img1 = self.transform(img1)
         img2 = self.transform(img2)
         return img1, img2
+    
+    def __repr__(self):
+        return f"J{self.__class__.__name__}(size={self.size})"
+
 
 
 class JointRandomTransforms(torch.nn.Module):
@@ -53,7 +57,7 @@ class JointRandomTransforms(torch.nn.Module):
             img2 = F.vflip(img2)
 
         if torch.rand(1) < self.perspective_p:
-            startpoints, endpoints = T.RandomPerspective.get_params(img1.size, distortion_scale=0.5)
+            startpoints, endpoints = T.RandomPerspective.get_params(img1.size(1), img1.size(0),distortion_scale=0.5)
             img1 = F.perspective(img1, startpoints, endpoints)
             img2 = F.perspective(img2, startpoints, endpoints)
 
@@ -66,7 +70,7 @@ class JointRandomTransforms(torch.nn.Module):
     def __repr__(self) -> str:
         return (f"{self.__class__.__name__}(horizontal_p={self.horizontal_p}, "
                 f"vertical_p={self.vertical_p}, rotation_degree={self.rotation_degree}, "
-                f"perspective_p={self.perspective_p})")
+                f"perspective_p={self.perspective_p}, size={self.size})")
 
 
 def base_transform(size: int = 512):

@@ -166,14 +166,14 @@ class Trainer:
 
             # Print results of this epoch
             print(f"Loss train: {np.mean(train_loss):.3f}\t test: {np.mean(test_loss):.3f}\t",
-                f"Accuracy train: {out_dict['train_acc'][-1]*100:.1f}%\t test: {out_dict['test_acc'][-1]*100:.1f}%",
-                f"Dice train: {out_dict['train_dice'][-1]*100:.1f}\t test: {out_dict['test_dice'][-1]*100:.1f}",
+                f"Accuracy train: {out_dict['train_acc'][-1]*100:.1f}%\t test: {out_dict['test_acc'][-1]*100:.1f}%\t",
+                f"Dice train: {out_dict['train_dice'][-1]*100:.1f}\t test: {out_dict['test_dice'][-1]*100:.1f}\t",
                 f"IoU train: {out_dict['train_iou'][-1]*100:.1f}\t test: {out_dict['test_iou'][-1]*100:.1f}")
             
         # Print final results
         print(f"Loss train: {np.mean(train_loss):.3f}\t test: {np.mean(test_loss):.3f}\t",
-                f"Accuracy train: {out_dict['train_acc'][-1]*100:.1f}%\t test: {out_dict['test_acc'][-1]*100:.1f}%",
-                f"Dice train: {out_dict['train_dice'][-1]*100:.1f}\t test: {out_dict['test_dice'][-1]*100:.1f}",
+                f"Accuracy train: {out_dict['train_acc'][-1]*100:.1f}%\t test: {out_dict['test_acc'][-1]*100:.1f}%\t",
+                f"Dice train: {out_dict['train_dice'][-1]*100:.1f}\t test: {out_dict['test_dice'][-1]*100:.1f}\t",
                 f"IoU train: {out_dict['train_iou'][-1]*100:.1f}\t test: {out_dict['test_iou'][-1]*100:.1f}")
         
         return out_dict
