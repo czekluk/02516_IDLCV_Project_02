@@ -137,7 +137,8 @@ class Trainer:
                 with torch.no_grad():
                     output = model(data)
                 test_loss.append(criterion(output, target.clone().detach().float().requires_grad_(True)).cpu().item())
-                predicted = (output > 0.5).float()
+                sigmoid_output = torch.sigmoid(output)
+                predicted = (sigmoid_output > 0.5).float()
                 test_acc.append(accuracy(predicted, target).cpu().item())
                 test_dice.append(dice_overlap(predicted, target).cpu().item())
                 test_iou.append(intersection_over_union(predicted, target).cpu().item())
