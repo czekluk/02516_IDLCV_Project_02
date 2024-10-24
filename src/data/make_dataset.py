@@ -6,6 +6,7 @@ import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
 from data.custom_transforms import random_transform, base_transform
+from data.weak_labels_creator import WeakLabelsCreator
 
 from torch.utils.data import DataLoader, Dataset
 
@@ -19,10 +20,14 @@ DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
 
 class SegmentationDataset(Dataset):
     def __init__(
-        self, train: bool, transform=transforms.ToTensor(), data_path=DATA_DIR, drive=True, train_split=0.8
+        self, train: bool, transform=transforms.ToTensor(), data_path=DATA_DIR, drive=True, train_split=0.8, 
+        weak_annotation=False, point_level_strategy="random", num_points_per_label=10
     ):
         "Initialization"
         self.transform = transform
+        self.weak_annotations = weak_annotation
+        if self.weak_annotations:
+            self.weak_labels_creator = WeakLabelsCreator(num_points_per_label, point_level_strategy)
         if drive:
             self.init_DRIVE(train, data_path, train_split)
         else:
@@ -100,8 +105,14 @@ class SegmentationDataset(Dataset):
         target_array = np.array(y)
         binary_target = (target_array > 0).astype(np.uint8)
         binary_target_tensor = torch.from_numpy(binary_target).float()
+        if self.weak_annotations:
+            return self.get_weakly_annotated(x, binary_target)
         
         return x, binary_target_tensor
+    
+    def get_weakly_annotated(self, x, binary_target):
+        weakly_annotated = self.weak_labels_creator.create_points(np.squeeze(binary_target))
+        return x, torch.from_numpy(binary_target).float(), weakly_annotated
 
 
 class SegmentationDataModule:
@@ -112,7 +123,10 @@ class SegmentationDataModule:
         train_transform=transforms.ToTensor(),
         test_transform=transforms.ToTensor(),
         drive=True,
-        train_split=0.8
+        train_split=0.8,
+        weak_annotations=False,
+        point_level_strategy="random", 
+        num_points_per_label=10
     ):
         """Custom data module class for the DRIVE and PH2 datasets. Used for
         loading of data, train/test splitting and constructing dataloaders.
@@ -124,14 +138,19 @@ class SegmentationDataModule:
             test_transform (_type_, optional): Transform to apply to test data. Defaults to transforms.ToTensor().
             drive (bool, optional): Flag to use either DRIVE or PH2 dataset. Defaults to DRIVE dataset (use True for DRIVE, False for PH2)
             train_split (float, optional): Percentage of data points to use in train set. The rest will be used in test set. Defaults to 0.8.
+            weak_annotations (bool, optional): If True, it will use weak annotations for train_dataset. Default False.
+            point_level_strategy (string, optional): Strategy to use for weak annotations.
+            num_points_per_label (int, optional): Number of points to be used for interest object and background in the weak labeling.
         """
         assert type(data_path)==str, "data_path needs to be a string"
         assert train_split < 1, "train_split needs to be less than 1"
         assert train_split > 0, "train_split needs to be more than 0"
         self.batch_size = batch_size
         self.data_path = data_path
+        self.point_level_strategy = point_level_strategy
         self.train_dataset = SegmentationDataset(
-            train=True, transform=train_transform, data_path=data_path, drive=drive, train_split=train_split
+            train=True, transform=train_transform, data_path=data_path, drive=drive, train_split=train_split,
+            weak_annotation=weak_annotations, point_level_strategy=point_level_strategy, num_points_per_label=num_points_per_label
         )
         self.test_dataset = SegmentationDataset(
             train=False, transform=test_transform, data_path=data_path, drive=drive, train_split=train_split
@@ -211,6 +230,55 @@ class SegmentationDataModule:
         plt.axis('off')
 
         plt.show()
+    
+    def plot_weakly_labeled_examples(self):
+        """Plot the first batch of weakly labeled training examples"""
+        images, labels, point_supervision = next(iter(self.trainloader))  # Assuming point supervision is returned from DataLoader
+        image, label, point_label = images[0], labels[0], point_supervision[0]
+        
+        # Convert to numpy for plotting
+        image = image.permute(1, 2, 0).numpy()
+        label = label.squeeze().numpy()
+        point_label = point_label.squeeze().numpy()
+
+        # Overlay points on the original mask
+        foreground_points = np.argwhere(point_label == 1)
+        background_points = np.argwhere(point_label == 0)
+
+        # Plot original image, full label, and weakly labeled image
+        plt.figure(figsize=(15, 5))
+
+        # Original input image
+        plt.subplot(1, 3, 1)
+        plt.imshow(image)
+        plt.title('Input Image')
+        plt.axis('off')
+
+        # Full target label
+        plt.subplot(1, 3, 2)
+        plt.imshow(label, cmap='gray')
+        plt.title('Full Target Label')
+        plt.axis('off')
+
+        # Weakly labeled mask with point clicks
+        plt.subplot(1, 3, 3)
+        plt.imshow(label, cmap='gray')
+
+        # Plot foreground points in green
+        for point in foreground_points:
+            plt.scatter(point[1], point[0], c='green', s=50, label='Positive Click' if point[0] == foreground_points[0][0] else "")
+
+        # Plot background points in red
+        for point in background_points:
+            plt.scatter(point[1], point[0], c='red', s=50, label='Negative Click' if point[0] == background_points[0][0] else "")
+
+        plt.title(f'Weakly Labeled, {self.point_level_strategy} strategy (Positive: Green, Negative: Red)')
+        plt.axis('off')
+
+        # Display the legend only once (to avoid duplicate labels)
+        plt.legend(loc="upper right")
+
+        plt.show()
             
     def __repr__(self):
         return (
@@ -264,6 +332,27 @@ def test_ph2():
     dm_ph2.plot_examples()
 
 
+def test_ph2_weakly_annotated():
+    data_dir = os.path.join(PROJECT_BASE_DIR, "data")
+    ph2_data_dir = os.path.join(data_dir, "PH2_Dataset_images")
+    print("Data directory: ", ph2_data_dir)
+
+    img_size = 512
+    train_transform = random_transform(size=img_size, horizontal=True, rotation=True)
+    test_transform = base_transform(size=img_size)
+
+    dm_ph2 = SegmentationDataModule(
+        data_path=ph2_data_dir, train_transform=train_transform, test_transform=test_transform, drive=False,
+        weak_annotations=True, point_level_strategy="extreme_clicks", num_points_per_label=10
+    )
+    
+    trainloader = dm_ph2.train_dataloader()
+    testloader = dm_ph2.test_dataloader()
+
+    dm_ph2.plot_weakly_labeled_examples()
+
+
 if __name__ == "__main__":
+    test_ph2_weakly_annotated()
     test_ph2()
     test_drive()
