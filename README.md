@@ -49,6 +49,11 @@ bkill <job-id>
 
 Next meeting Thursday 14:00 (24.10.2025)
 
+## ToDO V3
+- Weak labels (clicks with different sampling strategies)
+- Point level loss function
+- Ablation study (number of clicks, sampling strategy for clicks)
+
 ## Submission Deadline
 
 Submission on Friday 25th October at 17:00
