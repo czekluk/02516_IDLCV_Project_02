@@ -18,12 +18,12 @@ DATA_DIR = "/dtu/datasets1/02516"
 PH2_DATA_DIR = os.path.join(DATA_DIR, "PH2_Dataset_images")
 DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
 
-def test_experiment(epochs=2):
+def test_experiment_drive(epochs=2):
     """Experiment to test the Code using the TestCNN model"""
     train_transform = random_transform(size=512, horizontal=True, vertical=True, rotation=True)
     test_transform = base_transform(size=512)
-    dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
-    # dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
+    # dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
+    dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
     trainloader = dm.train_dataloader()
     testloader = dm.test_dataloader()
 
@@ -35,10 +35,10 @@ def test_experiment(epochs=2):
     ]
 
     description = [
-        "EncDec_base",
-        "EncDecStride",
-        "EncDec_dropout",
-        "DilatedConvNet"
+        "EncDec_base_drive",
+        "EncDecStride_drive",
+        "EncDec_dropout_drive",
+        "DilatedConvNet_drive"
     ]
 
     optimizers = [
@@ -62,4 +62,4 @@ def test_experiment(epochs=2):
     print(f"Training on dataset {dm.data_path}")
     trainer = Trainer(models, optimizers, epochs, trainloader, testloader, train_transform, description, criterion_functions)
     outputs = trainer.train()
-    save_results(outputs, os.path.join(PROJECT_BASE_DIR, "results/experiments.json"), dm.data_path)
+    save_results(outputs, os.path.join(PROJECT_BASE_DIR, "results/experiments_drive.json"), dm.data_path)

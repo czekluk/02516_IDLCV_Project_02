@@ -8,31 +8,31 @@ class EncDec_base(nn.Module):
         super().__init__()
 
         # encoder (downsampling)
-        self.enc_conv0 = nn.Conv2d(3, 1024, 3, padding=1)
-        self.pool0 = nn.MaxPool2d(2, 2)  # 256 -> 128
-        self.enc_conv1 = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.enc_conv0 = nn.Conv2d(3, 128, 3, padding=1)
+        self.pool0 = nn.MaxPool2d(2, 2)  # 128 -> 128
+        self.enc_conv1 = nn.Conv2d(128, 128, 3, padding=1)
         self.pool1 = nn.MaxPool2d(2, 2)  # 128 -> 64
-        self.enc_conv2 = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.enc_conv2 = nn.Conv2d(128, 128, 3, padding=1)
         self.pool2 = nn.MaxPool2d(2, 2)  # 64 -> 32
-        self.enc_conv3 = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.enc_conv3 = nn.Conv2d(128, 128, 3, padding=1)
         self.pool3 = nn.MaxPool2d(2, 2)  # 32 -> 16
-        self.enc_conv4 = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.enc_conv4 = nn.Conv2d(128, 192, 3, padding=1)
         self.pool4 = nn.MaxPool2d(2, 2)  # 16 -> 8
 
         # bottleneck
-        self.bottleneck_conv = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.bottleneck_conv = nn.Conv2d(192, 192, 3, padding=1)
 
         # decoder (upsampling)
         self.upsample0 = nn.Upsample(scale_factor=2, mode='nearest')  # 8 -> 16
-        self.dec_conv0 = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.dec_conv0 = nn.Conv2d(192, 128, 3, padding=1)
         self.upsample1 = nn.Upsample(scale_factor=2, mode='nearest')  # 16 -> 32
-        self.dec_conv1 = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.dec_conv1 = nn.Conv2d(128, 128, 3, padding=1)
         self.upsample2 = nn.Upsample(scale_factor=2, mode='nearest')  # 32 -> 64
-        self.dec_conv2 = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.dec_conv2 = nn.Conv2d(128, 128, 3, padding=1)
         self.upsample3 = nn.Upsample(scale_factor=2, mode='nearest')  # 64 -> 128
-        self.dec_conv3 = nn.Conv2d(1024, 1024, 3, padding=1)
-        self.upsample4 = nn.Upsample(scale_factor=2, mode='nearest')  # 128 -> 256
-        self.dec_conv4 = nn.Conv2d(1024, 1, 3, padding=1)
+        self.dec_conv3 = nn.Conv2d(128, 128, 3, padding=1)
+        self.upsample4 = nn.Upsample(scale_factor=2, mode='nearest')  # 128 -> 128
+        self.dec_conv4 = nn.Conv2d(128, 1, 3, padding=1)
 
     def forward(self, x):
         # encoder
@@ -59,21 +59,21 @@ class EncDecStride(nn.Module):
         super().__init__()
 
         # encoder (downsampling with stride 2)
-        self.enc_conv0 = nn.Conv2d(3, 1024, 3, padding=1, stride=2)  # 256 -> 128
-        self.enc_conv1 = nn.Conv2d(1024, 1024, 3, padding=1, stride=2)  # 128 -> 64
-        self.enc_conv2 = nn.Conv2d(1024, 1024, 3, padding=1, stride=2)  # 64 -> 32
-        self.enc_conv3 = nn.Conv2d(1024, 1024, 3, padding=1, stride=2)  # 32 -> 16
-        self.enc_conv4 = nn.Conv2d(1024, 1024, 3, padding=1, stride=2)  # 16 -> 8
+        self.enc_conv0 = nn.Conv2d(3, 128, 3, padding=1, stride=2)  # 128 -> 128
+        self.enc_conv1 = nn.Conv2d(128, 128, 3, padding=1, stride=2)  # 128 -> 64
+        self.enc_conv2 = nn.Conv2d(128, 128, 3, padding=1, stride=2)  # 64 -> 32
+        self.enc_conv3 = nn.Conv2d(128, 128, 3, padding=1, stride=2)  # 32 -> 16
+        self.enc_conv4 = nn.Conv2d(128, 192, 3, padding=1, stride=2)  # 16 -> 8
 
         # bottleneck
-        self.bottleneck_conv = nn.Conv2d(1024, 1024, 3, padding=1)
+        self.bottleneck_conv = nn.Conv2d(192, 192, 3, padding=1)
 
         # decoder (upsampling with ConvTranspose2d)
-        self.dec_conv0 = nn.ConvTranspose2d(1024, 1024, 3, padding=1, stride=2, output_padding=1)  # 8 -> 16
-        self.dec_conv1 = nn.ConvTranspose2d(1024, 1024, 3, padding=1, stride=2, output_padding=1)  # 16 -> 32
-        self.dec_conv2 = nn.ConvTranspose2d(1024, 1024, 3, padding=1, stride=2, output_padding=1)  # 32 -> 64
-        self.dec_conv3 = nn.ConvTranspose2d(1024, 1024, 3, padding=1, stride=2, output_padding=1)  # 64 -> 128
-        self.dec_conv4 = nn.ConvTranspose2d(1024, 1, 3, padding=1, stride=2, output_padding=1)  # 128 -> 256
+        self.dec_conv0 = nn.ConvTranspose2d(192, 128, 3, padding=1, stride=2, output_padding=1)  # 8 -> 16
+        self.dec_conv1 = nn.ConvTranspose2d(128, 128, 3, padding=1, stride=2, output_padding=1)  # 16 -> 32
+        self.dec_conv2 = nn.ConvTranspose2d(128, 128, 3, padding=1, stride=2, output_padding=1)  # 32 -> 64
+        self.dec_conv3 = nn.ConvTranspose2d(128, 128, 3, padding=1, stride=2, output_padding=1)  # 64 -> 128
+        self.dec_conv4 = nn.ConvTranspose2d(128, 1, 3, padding=1, stride=2, output_padding=1)  # 128 -> 128
 
     def forward(self, x):
         # encoder
@@ -129,12 +129,12 @@ class DilatedConvNet(nn.Module):
     def __init__(self):
         super().__init__()
         # Dilated convolutions with increasing dilation rates
-        self.dilated_conv0 = nn.Conv2d(3, 256, 3, padding=1, dilation=1)
-        self.dilated_conv1 = nn.Conv2d(256, 256, 3, padding=2, dilation=2)
-        self.dilated_conv2 = nn.Conv2d(256, 256, 3, padding=4, dilation=4)
-        self.dilated_conv3 = nn.Conv2d(256, 256, 3, padding=8, dilation=8)
-        self.dilated_conv4 = nn.Conv2d(256, 256, 3, padding=16, dilation=16)
-        self.dilated_conv5 = nn.Conv2d(256, 1, 3, padding=1)  # Output layer
+        self.dilated_conv0 = nn.Conv2d(3, 128, 3, padding=1, dilation=1)
+        self.dilated_conv1 = nn.Conv2d(128, 128, 3, padding=2, dilation=2)
+        self.dilated_conv2 = nn.Conv2d(128, 192, 3, padding=4, dilation=4)
+        self.dilated_conv3 = nn.Conv2d(192, 128, 3, padding=8, dilation=8)
+        self.dilated_conv4 = nn.Conv2d(128, 128, 3, padding=16, dilation=16)
+        self.dilated_conv5 = nn.Conv2d(128, 1, 3, padding=1)  # Output layer
 
     def forward(self, x):
         # Apply dilated convolutions
