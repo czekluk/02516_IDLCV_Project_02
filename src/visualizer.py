@@ -11,8 +11,7 @@ from data.make_dataset import SegmentationDataModule
 
 PROJECT_BASE_DIR = os.path.dirname(os.path.abspath(''))
 DEFAULT_PLOT_METRICS = ["train_acc", "test_acc", "test_dice", "test_iou", "test_sensitivity", "test_specificity"]
-#DATA_DIR = "/dtu/datasets1/02516"
-DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(PROJECT_BASE_DIR)), '02516')
+DATA_DIR = "/dtu/datasets1/02516"
 PH2_DATA_DIR = os.path.join(DATA_DIR, "PH2_Dataset_images")
 DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
 
