@@ -73,7 +73,7 @@ class JointRandomTransforms(torch.nn.Module):
                 f"perspective_p={self.perspective_p}, size={self.size})")
 
 class JointRandomCropTransforms(JointRandomTransforms):
-    def __init__(self, size: int = 512, crop_size: int = 256, num_crops: int = 5, **kwargs):
+    def __init__(self, size: int = 512, crop_size: int = 256, **kwargs):
         """
         Initialize the random crop transform.
         
@@ -85,7 +85,6 @@ class JointRandomCropTransforms(JointRandomTransforms):
         """
         super().__init__(size=size, **kwargs)
         self.crop_size = crop_size
-        self.num_crops = num_crops
 
     def forward(self, img1, img2):
         """
@@ -96,46 +95,42 @@ class JointRandomCropTransforms(JointRandomTransforms):
             img2 (PIL.Image or Tensor): The corresponding mask.
         
         Returns:
-            List[Tuple[Tensor, Tensor]]: A list of transformed image and mask pairs.
+            (img1, img2): Transformed pair of images.
         """
         img1 = self.base_transform(img1)
         img2 = self.base_transform(img2)
         
-        crops = []
-        for _ in range(self.num_crops):
-            # Random crop
-            i, j, h, w = T.RandomCrop.get_params(img1, output_size=(self.crop_size, self.crop_size))
-            cropped_img1 = F.crop(img1, i, j, h, w)
-            cropped_img2 = F.crop(img2, i, j, h, w)
-            
-            # Apply other random transformations
-            if torch.rand(1) < self.horizontal_p:
-                cropped_img1 = F.hflip(cropped_img1)
-                cropped_img2 = F.hflip(cropped_img2)
+        # Random crop
+        i, j, h, w = T.RandomCrop.get_params(img1, output_size=(self.crop_size, self.crop_size))
+        cropped_img1 = F.crop(img1, i, j, h, w)
+        cropped_img2 = F.crop(img2, i, j, h, w)
+        
+        # Apply other random transformations
+        if torch.rand(1) < self.horizontal_p:
+            cropped_img1 = F.hflip(cropped_img1)
+            cropped_img2 = F.hflip(cropped_img2)
 
-            if torch.rand(1) < self.vertical_p:
-                cropped_img1 = F.vflip(cropped_img1)
-                cropped_img2 = F.vflip(cropped_img2)
+        if torch.rand(1) < self.vertical_p:
+            cropped_img1 = F.vflip(cropped_img1)
+            cropped_img2 = F.vflip(cropped_img2)
 
-            if torch.rand(1) < self.perspective_p:
-                startpoints, endpoints = T.RandomPerspective.get_params(cropped_img1.size(1), cropped_img1.size(0), distortion_scale=0.5)
-                cropped_img1 = F.perspective(cropped_img1, startpoints, endpoints)
-                cropped_img2 = F.perspective(cropped_img2, startpoints, endpoints)
+        if torch.rand(1) < self.perspective_p:
+            startpoints, endpoints = T.RandomPerspective.get_params(cropped_img1.size(1), cropped_img1.size(0), distortion_scale=0.5)
+            cropped_img1 = F.perspective(cropped_img1, startpoints, endpoints)
+            cropped_img2 = F.perspective(cropped_img2, startpoints, endpoints)
 
-            angle = T.RandomRotation.get_params([-self.rotation_degree, self.rotation_degree])
-            cropped_img1 = F.rotate(cropped_img1, angle)
-            cropped_img2 = F.rotate(cropped_img2, angle)
+        angle = T.RandomRotation.get_params([-self.rotation_degree, self.rotation_degree])
+        cropped_img1 = F.rotate(cropped_img1, angle)
+        cropped_img2 = F.rotate(cropped_img2, angle)
 
-            # Resize the crops back to the original size
-            cropped_img1 = F.resize(cropped_img1, (self.size, self.size))
-            cropped_img2 = F.resize(cropped_img2, (self.size, self.size))
+        # Resize the crops back to the original size
+        cropped_img1 = F.resize(cropped_img1, (self.size, self.size))
+        cropped_img2 = F.resize(cropped_img2, (self.size, self.size))
 
-            crops.append((cropped_img1, cropped_img2))
-
-        return crops
+        return cropped_img1, cropped_img2
 
     def __repr__(self):
-        return (f"{self.__class__.__name__}(crop_size={self.crop_size}, num_crops={self.num_crops}, "
+        return (f"{self.__class__.__name__}(crop_size={self.crop_size} "
                 f"horizontal_p={self.horizontal_p}, vertical_p={self.vertical_p}, "
                 f"rotation_degree={self.rotation_degree}, perspective_p={self.perspective_p}, size={self.size})")
 
@@ -181,7 +176,6 @@ def random_crop_transform(
     return JointRandomCropTransforms(
                 size=size,
                 crop_size=size//2,
-                num_crops=5,
                 horizontal_p=horizontal_p if horizontal else 0,
                 vertical_p=vertical_p if vertical else 0,
                 rotation_degree=rotation_degree if rotation else 0,
