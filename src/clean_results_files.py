@@ -115,15 +115,15 @@ def archive_results_and_clean(results_dir):
     for model_file in saved_model_files:
         shutil.copy(model_file, saved_model_dir)
 
-    # Clean the original JSON files
-    for json_file in json_files:
-        clean_results_file(json_file)
+    # # Clean the original JSON files
+    # for json_file in json_files:
+    #     clean_results_file(json_file)
 
-    # Clean the original CSV files
-    csv_files = glob.glob(os.path.join(results_dir, "*.csv"))
-    for csv_file in csv_files:
-        with open(csv_file, 'w', newline='') as f:
-            f.truncate()
+    # # Clean the original CSV files
+    # csv_files = glob.glob(os.path.join(results_dir, "*.csv"))
+    # for csv_file in csv_files:
+    #     with open(csv_file, 'w', newline='') as f:
+    #         f.truncate()
         
 
 # Example usage

@@ -9,6 +9,7 @@ from models.unet import UNetDeconv, UNetDilated
 from data.custom_transforms import base_transform, random_transform
 from data.make_dataset import SegmentationDataModule
 import csv
+from copy import deepcopy
 
 PROJECT_BASE_DIR = os.path.dirname("/zhome/25/a/202562/intro_deep_learning_in_computer_vision/02516_IDLCV_Project_02/")
 DEFAULT_PLOT_METRICS = ["test_dice", "test_iou", "test_sensitivity", "test_specificity"]
@@ -230,21 +231,27 @@ if __name__ == "__main__":
         with open(summary_file, 'r') as f:
             reader = csv.reader(f)
             next(reader)  # Skip header
-            first_row = next(reader)
+           
             best_models = []
+            done=True
             for row in reader:
+                if done:
+                    first_row = deepcopy(row)
+                    done= False
                 model_name, test_diou = row[0], float(row[5])
                 best_models.append((model_name, test_diou))
             best_models = sorted(best_models, key=lambda x: x[1], reverse=True)[:5]
             for best_model, best_diou in best_models:
-                summary_diou[(best_model, dataset)] = round(best_diou, 3)
-            best_diou = float(first_row[5])
-            summary_diou[(best_model, dataset)] = round(best_diou, 3)
+                if (best_model, dataset) not in summary_diou:
+                    summary_diou[(best_model, dataset)] = []
+                summary_diou[(best_model, dataset)].append(round(best_diou, 3))
+            # best_diou = float(first_row[5])
+            # summary_diou[(best_model, dataset)] = round(best_diou, 3)
     # Reduce summary_diou to contain only the best dIoU from both the ph2 and drive datasets
     best_summary_diou = {}
     for dataset in ["drive", "ph2"]:
         best_model = max(
-            ((model, diou) for (model, ds), diou in summary_diou.items() if ds == dataset),
+            ((model, max(diou_list)) for (model, ds), diou_list in summary_diou.items() if ds == dataset),
             key=lambda x: x[1],
             default=None
         )
@@ -273,8 +280,8 @@ if __name__ == "__main__":
         model_path = os.path.join(saved_models_dir, model_file)
         if dataset == "ph2":
             best_ph2_model_path = model_path
-        # elif dataset == "drive":
-        #     best_drive_model_path = model_path
+        elif dataset == "drive":
+            best_drive_model_path = model_path
       
 
     # Print paths to the best models

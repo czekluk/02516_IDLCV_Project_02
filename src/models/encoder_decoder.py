@@ -8,13 +8,13 @@ class EncDec_base(nn.Module):
         super().__init__()
 
         # encoder (downsampling)
-        self.enc_conv0 = nn.Conv2d(3, 128, 3, padding=1)
+        self.enc_conv0 = nn.Conv2d(3, 16, 3, padding=1)
         self.pool0 = nn.MaxPool2d(2, 2)  # 128 -> 128
-        self.enc_conv1 = nn.Conv2d(128, 128, 3, padding=1)
+        self.enc_conv1 = nn.Conv2d(16, 32, 3, padding=1)
         self.pool1 = nn.MaxPool2d(2, 2)  # 128 -> 64
-        self.enc_conv2 = nn.Conv2d(128, 128, 3, padding=1)
+        self.enc_conv2 = nn.Conv2d(32, 64, 3, padding=1)
         self.pool2 = nn.MaxPool2d(2, 2)  # 64 -> 32
-        self.enc_conv3 = nn.Conv2d(128, 128, 3, padding=1)
+        self.enc_conv3 = nn.Conv2d(64, 128, 3, padding=1)
         self.pool3 = nn.MaxPool2d(2, 2)  # 32 -> 16
         self.enc_conv4 = nn.Conv2d(128, 192, 3, padding=1)
         self.pool4 = nn.MaxPool2d(2, 2)  # 16 -> 8
@@ -26,13 +26,13 @@ class EncDec_base(nn.Module):
         self.upsample0 = nn.Upsample(scale_factor=2, mode='nearest')  # 8 -> 16
         self.dec_conv0 = nn.Conv2d(192, 128, 3, padding=1)
         self.upsample1 = nn.Upsample(scale_factor=2, mode='nearest')  # 16 -> 32
-        self.dec_conv1 = nn.Conv2d(128, 128, 3, padding=1)
+        self.dec_conv1 = nn.Conv2d(128, 64, 3, padding=1)
         self.upsample2 = nn.Upsample(scale_factor=2, mode='nearest')  # 32 -> 64
-        self.dec_conv2 = nn.Conv2d(128, 128, 3, padding=1)
+        self.dec_conv2 = nn.Conv2d(64, 32, 3, padding=1)
         self.upsample3 = nn.Upsample(scale_factor=2, mode='nearest')  # 64 -> 128
-        self.dec_conv3 = nn.Conv2d(128, 128, 3, padding=1)
+        self.dec_conv3 = nn.Conv2d(32, 16, 3, padding=1)
         self.upsample4 = nn.Upsample(scale_factor=2, mode='nearest')  # 128 -> 128
-        self.dec_conv4 = nn.Conv2d(128, 1, 3, padding=1)
+        self.dec_conv4 = nn.Conv2d(16, 1, 3, padding=1)
 
     def forward(self, x):
         # encoder
@@ -59,10 +59,10 @@ class EncDecStride(nn.Module):
         super().__init__()
 
         # encoder (downsampling with stride 2)
-        self.enc_conv0 = nn.Conv2d(3, 128, 3, padding=1, stride=2)  # 128 -> 128
-        self.enc_conv1 = nn.Conv2d(128, 128, 3, padding=1, stride=2)  # 128 -> 64
-        self.enc_conv2 = nn.Conv2d(128, 128, 3, padding=1, stride=2)  # 64 -> 32
-        self.enc_conv3 = nn.Conv2d(128, 128, 3, padding=1, stride=2)  # 32 -> 16
+        self.enc_conv0 = nn.Conv2d(3, 16, 3, padding=1, stride=2)  # 128 -> 128
+        self.enc_conv1 = nn.Conv2d(16, 32, 3, padding=1, stride=2)  # 128 -> 64
+        self.enc_conv2 = nn.Conv2d(32, 64, 3, padding=1, stride=2)  # 64 -> 32
+        self.enc_conv3 = nn.Conv2d(64, 128, 3, padding=1, stride=2)  # 32 -> 16
         self.enc_conv4 = nn.Conv2d(128, 192, 3, padding=1, stride=2)  # 16 -> 8
 
         # bottleneck
@@ -70,10 +70,10 @@ class EncDecStride(nn.Module):
 
         # decoder (upsampling with ConvTranspose2d)
         self.dec_conv0 = nn.ConvTranspose2d(192, 128, 3, padding=1, stride=2, output_padding=1)  # 8 -> 16
-        self.dec_conv1 = nn.ConvTranspose2d(128, 128, 3, padding=1, stride=2, output_padding=1)  # 16 -> 32
-        self.dec_conv2 = nn.ConvTranspose2d(128, 128, 3, padding=1, stride=2, output_padding=1)  # 32 -> 64
-        self.dec_conv3 = nn.ConvTranspose2d(128, 128, 3, padding=1, stride=2, output_padding=1)  # 64 -> 128
-        self.dec_conv4 = nn.ConvTranspose2d(128, 1, 3, padding=1, stride=2, output_padding=1)  # 128 -> 128
+        self.dec_conv1 = nn.ConvTranspose2d(128, 64, 3, padding=1, stride=2, output_padding=1)  # 16 -> 32
+        self.dec_conv2 = nn.ConvTranspose2d(64, 32, 3, padding=1, stride=2, output_padding=1)  # 32 -> 64
+        self.dec_conv3 = nn.ConvTranspose2d(32, 16, 3, padding=1, stride=2, output_padding=1)  # 64 -> 128
+        self.dec_conv4 = nn.ConvTranspose2d(16, 1, 3, padding=1, stride=2, output_padding=1)  # 128 -> 128
 
     def forward(self, x):
         # encoder
@@ -123,18 +123,57 @@ class EncDec_dropout(EncDec_base):
         d4 = self.dec_conv4(self.upsample4(d3))  # no activation
         return d4
 
+class EncDec_batchnorm_dropout(EncDec_base):
+    """Encoder decoder structure with batch normalization and dropout"""
+    def __init__(self, dropout_prob=0.5):
+        super().__init__()
+        self.batchnorm0 = nn.BatchNorm2d(16)
+        self.batchnorm1 = nn.BatchNorm2d(32)
+        self.batchnorm2 = nn.BatchNorm2d(64)
+        self.batchnorm3 = nn.BatchNorm2d(128)
+        self.batchnorm4 = nn.BatchNorm2d(192)
+        self.dropout = nn.Dropout(dropout_prob)
+
+    def forward(self, x):
+        # encoder
+        e0 = self.pool0(F.relu(self.batchnorm0(self.enc_conv0(x))))
+        e0 = self.dropout(e0)
+        e1 = self.pool1(F.relu(self.batchnorm1(self.enc_conv1(e0))))
+        e1 = self.dropout(e1)
+        e2 = self.pool2(F.relu(self.batchnorm2(self.enc_conv2(e1))))
+        e2 = self.dropout(e2)
+        e3 = self.pool3(F.relu(self.batchnorm3(self.enc_conv3(e2))))
+        e3 = self.dropout(e3)
+        e4 = self.pool4(F.relu(self.batchnorm4(self.enc_conv4(e3))))
+        e4 = self.dropout(e4)
+        # bottleneck
+        b = F.relu(self.bottleneck_conv(e4))
+        b = self.dropout(b)
+
+        # decoder
+        d0 = F.relu(self.batchnorm3(self.dec_conv0(self.upsample0(b))))
+        d0 = self.dropout(d0)
+        d1 = F.relu(self.batchnorm2(self.dec_conv1(self.upsample1(d0))))
+        d1 = self.dropout(d1)
+        d2 = F.relu(self.batchnorm1(self.dec_conv2(self.upsample2(d1))))
+        d2 = self.dropout(d2)
+        d3 = F.relu(self.batchnorm0(self.dec_conv3(self.upsample3(d2))))
+        d3 = self.dropout(d3)
+        d4 = self.dec_conv4(self.upsample4(d3))  # no activation
+        return d4
+    
 
 class DilatedConvNet(nn.Module):
     """Network with only dilated convolutions and increasing dilation rates"""
     def __init__(self):
         super().__init__()
         # Dilated convolutions with increasing dilation rates
-        self.dilated_conv0 = nn.Conv2d(3, 128, 3, padding=1, dilation=1)
-        self.dilated_conv1 = nn.Conv2d(128, 128, 3, padding=2, dilation=2)
-        self.dilated_conv2 = nn.Conv2d(128, 192, 3, padding=4, dilation=4)
-        self.dilated_conv3 = nn.Conv2d(192, 128, 3, padding=8, dilation=8)
-        self.dilated_conv4 = nn.Conv2d(128, 128, 3, padding=16, dilation=16)
-        self.dilated_conv5 = nn.Conv2d(128, 1, 3, padding=1)  # Output layer
+        self.dilated_conv0 = nn.Conv2d(3, 16, 3, padding=1, dilation=1)
+        self.dilated_conv1 = nn.Conv2d(16, 32, 3, padding=2, dilation=2)
+        self.dilated_conv2 = nn.Conv2d(32, 64, 3, padding=4, dilation=4)
+        self.dilated_conv3 = nn.Conv2d(64, 128, 3, padding=8, dilation=8)
+        self.dilated_conv4 = nn.Conv2d(128, 192, 3, padding=16, dilation=16)
+        self.dilated_conv5 = nn.Conv2d(192, 1, 3, padding=1)  # Output layer
 
     def forward(self, x):
         # Apply dilated convolutions
