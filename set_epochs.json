@@ -1,0 +1,25 @@
+{
+    "max_epochs": 100,
+    "drive": {
+        "default": 2,
+        "class_proportions": {
+            "EncDec_base": 0.6,
+            "EncDecStride":  0.6,
+            "EncDec_dropout":  0.6,
+            "DilatedConvNet":  0.6,
+            "UNetDeconv": 0.6,
+            "UNetDilated": 0.6
+        }
+    },
+    "other": {
+        "default": 0.5,
+        "class_proportions": {
+            "EncDec_base": 2,
+            "EncDecStride": 2,
+            "EncDec_dropout": 2,
+            "DilatedConvNet": 2,
+            "UNetDeconv": 2,
+            "UNetDilated": 2
+        }
+    }
+}
