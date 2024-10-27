@@ -236,6 +236,62 @@ class Visualizer():
             time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             f.savefig(save_path + f"pred_overlay_data_{time}.png", bbox_inches='tight')
         plt.show()
+        
+    def plot_weakly_labeled_prediction(self, model, batch, save_path=None, figsize=(10, 3), cmap='cool'):
+        """Plot a comparison of the predicted and data images by overlaying the prediction on the weakly labeled points
+
+        Args:
+            model: PyTorch model to use for prediction.
+            batch: A batch of images, targets, and supervised points.
+            save_path: Path to save the plot. Defaults to None (no save).
+            figsize: Size of the plot. Defaults to (10, 5).
+        """
+        data, target, points = batch
+        data, target = data.to(self.device), target.to(self.device)
+        points = points.to(self.device).squeeze().numpy()
+        
+        with torch.no_grad():
+            output = model(data)
+        sigmoid_output = torch.sigmoid(output)
+        predicted = (sigmoid_output > 0.5).float()
+        
+        # Plot overlayed images
+        f, ax = plt.subplots(1, len(predicted), figsize=figsize)
+        for i, (pred_img, tar_img) in enumerate(zip(predicted, target)):
+            pred_img = pred_img.squeeze(0).cpu().numpy()
+            tar_img = tar_img.squeeze(0).cpu().numpy()
+            masked = np.ma.masked_where(pred_img == 0, pred_img)
+            ax[i].imshow(tar_img, cmap='gray', interpolation='none')
+            ax[i].imshow(masked, alpha=0.6, cmap=cmap, vmin=0.99, vmax=1.,interpolation='none')
+            
+            # Plot weakly labeled points
+            foreground_points = np.argwhere(points[i] == 1)
+            background_points = np.argwhere(points[i] == 0)
+            
+            # Plot foreground points in green
+            for j, point in enumerate(foreground_points):
+                ax[i].scatter(point[1], point[0], c='green', s=50, label='Positive Click' if (j == 0) and (i == 0) else None)
+
+            # Plot background points in red
+            for j, point in enumerate(background_points):
+                ax[i].scatter(point[1], point[0], c='red', s=50, label='Positive Click' if (j == 0) and (i == 0) else None)
+                
+            ax[i].axis('off')
+
+        # Add color legend
+        pred_color = plt.get_cmap(cmap)(0.99)
+        tar_color = plt.get_cmap('grey')(0.9)
+        plt.plot(0, 0, "-", color=tar_color, label="Target")
+        plt.plot(0, 0, "-", color=pred_color, label="Prediction")
+        f.legend(loc='lower center', ncol=4, fontsize=10, bbox_to_anchor=(0.5, -0.05))
+        
+        # Save and show plot
+        plt.tight_layout()
+        if save_path:
+            time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            f.savefig(save_path + f"pred_overlay_target_{time}.png", bbox_inches='tight')
+        plt.show()
+    
 def get_best_model(summary_path):
     with open(summary_path, "r") as f:
         reader = csv.reader(f)
