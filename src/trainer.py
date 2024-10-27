@@ -8,6 +8,7 @@ from typing import List
 from torch.utils.data import DataLoader
 import datetime
 from metrics import accuracy, dice_overlap, intersection_over_union, sensitivity, specificity
+from loss_functions.point_level_loss import PLLWithLogits
 
 class Trainer:
     
@@ -108,25 +109,46 @@ class Trainer:
             train_iou = []
             train_sensitivity = []
             train_specificity = []
-            
-            for minibatch_no, (data, target) in tqdm(enumerate(self.train_loader), total=len(self.train_loader)):
-                data, target = data.to(self.device), target.to(self.device)
+            if isinstance(criterion, PLLWithLogits):
+                for minibatch_no, (data, target, point_target) in tqdm(enumerate(self.train_loader), total=len(self.train_loader)):
+                    data, target, point_target = data.to(self.device), target.to(self.device), point_target.to(self.device)
 
-                optimizer.zero_grad()
-                output = model(data)
-                loss = criterion(output, target.clone().detach().float().requires_grad_(True))
-                loss.backward()
-                optimizer.step()
-                
-                train_loss.append(loss.item())
-                sigmoid_output = torch.sigmoid(output)
-                predicted = (sigmoid_output > 0.5).float()
-                
-                train_acc.append(accuracy(predicted, target).cpu().item())
-                train_dice.append(dice_overlap(predicted, target).cpu().item())
-                train_iou.append(intersection_over_union(predicted, target).cpu().item())
-                train_sensitivity.append(sensitivity(predicted, target).cpu().item())
-                train_specificity.append(specificity(predicted, target).cpu().item())
+                    optimizer.zero_grad()
+                    output = model(data)
+                    loss = criterion(output, point_target.clone().detach().float().requires_grad_(True))
+                    loss.backward()
+                    optimizer.step()
+                    
+                    train_loss.append(loss.item())
+                    sigmoid_output = torch.sigmoid(output)
+                    predicted = (sigmoid_output > 0.5).float()
+                    
+                    # accuracy calculated w.r.t. to true mask
+                    train_acc.append(accuracy(predicted, target).cpu().item())
+                    train_dice.append(dice_overlap(predicted, target).cpu().item())
+                    train_iou.append(intersection_over_union(predicted, target).cpu().item())
+                    train_sensitivity.append(sensitivity(predicted, target).cpu().item())
+                    train_specificity.append(specificity(predicted, target).cpu().item())
+            else:
+                for minibatch_no, (data, target) in tqdm(enumerate(self.train_loader), total=len(self.train_loader)):
+                    data, target = data.to(self.device), target.to(self.device)
+
+                    optimizer.zero_grad()
+                    output = model(data)
+                    loss = criterion(output, target.clone().detach().float().requires_grad_(True))
+                    loss.backward()
+                    optimizer.step()
+                    
+                    train_loss.append(loss.item())
+                    sigmoid_output = torch.sigmoid(output)
+                    predicted = (sigmoid_output > 0.5).float()
+                    
+                    train_acc.append(accuracy(predicted, target).cpu().item())
+                    train_dice.append(dice_overlap(predicted, target).cpu().item())
+                    train_iou.append(intersection_over_union(predicted, target).cpu().item())
+                    train_sensitivity.append(sensitivity(predicted, target).cpu().item())
+                    train_specificity.append(specificity(predicted, target).cpu().item())
+
                 
             
             test_loss = []
@@ -136,18 +158,33 @@ class Trainer:
             test_sensitivity = []
             test_specificity = []
             model.eval()
-            for data, target in self.test_loader:
-                data, target = data.to(self.device), target.to(self.device)
-                with torch.no_grad():
-                    output = model(data)
-                test_loss.append(criterion(output, target.clone().detach().float().requires_grad_(True)).cpu().item())
-                sigmoid_output = torch.sigmoid(output)
-                predicted = (sigmoid_output > 0.5).float()
-                test_acc.append(accuracy(predicted, target).cpu().item())
-                test_dice.append(dice_overlap(predicted, target).cpu().item())
-                test_iou.append(intersection_over_union(predicted, target).cpu().item())
-                test_sensitivity.append(sensitivity(predicted, target).cpu().item())
-                test_specificity.append(specificity(predicted, target).cpu().item())
+            if isinstance(criterion, PLLWithLogits):
+                for data, target, point_target in self.test_loader:
+                    data, target, point_target = data.to(self.device), target.to(self.device), point_target.to(self.device)
+                    with torch.no_grad():
+                        output = model(data)
+                    test_loss.append(criterion(output, point_target.clone().detach().float().requires_grad_(True)).cpu().item())
+                    sigmoid_output = torch.sigmoid(output)
+                    predicted = (sigmoid_output > 0.5).float()
+                    # Metrics w.r.t. original mask
+                    test_acc.append(accuracy(predicted, target).cpu().item())
+                    test_dice.append(dice_overlap(predicted, target).cpu().item())
+                    test_iou.append(intersection_over_union(predicted, target).cpu().item())
+                    test_sensitivity.append(sensitivity(predicted, target).cpu().item())
+                    test_specificity.append(specificity(predicted, target).cpu().item())
+            else:
+                for data, target in self.test_loader:
+                    data, target = data.to(self.device), target.to(self.device)
+                    with torch.no_grad():
+                        output = model(data)
+                    test_loss.append(criterion(output, target.clone().detach().float().requires_grad_(True)).cpu().item())
+                    sigmoid_output = torch.sigmoid(output)
+                    predicted = (sigmoid_output > 0.5).float()
+                    test_acc.append(accuracy(predicted, target).cpu().item())
+                    test_dice.append(dice_overlap(predicted, target).cpu().item())
+                    test_iou.append(intersection_over_union(predicted, target).cpu().item())
+                    test_sensitivity.append(sensitivity(predicted, target).cpu().item())
+                    test_specificity.append(specificity(predicted, target).cpu().item())
 
             # Add entries output json
             out_dict['train_loss'].append(np.mean(train_loss))

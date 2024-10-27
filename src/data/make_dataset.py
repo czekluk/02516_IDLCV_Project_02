@@ -154,7 +154,8 @@ class SegmentationDataModule:
             weak_annotation=weak_annotations, point_level_strategy=point_level_strategy, num_points_per_label=num_points_per_label
         )
         self.test_dataset = SegmentationDataset(
-            train=False, transform=test_transform, data_path=data_path, drive=drive, train_split=train_split
+            train=False, transform=test_transform, data_path=data_path, drive=drive, train_split=train_split,
+            weak_annotation=weak_annotations, point_level_strategy=point_level_strategy, num_points_per_label=num_points_per_label
         )
         
     def train_dataloader(self, shuffle=True) -> DataLoader:
