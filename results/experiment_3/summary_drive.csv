@@ -1,0 +1,67 @@
+Model Name,Dataset,Criterion,Transforms,Test Dice,Test IoU,Test Specificity,Test Sensitivity,Test Accuracy
+DilatedConvNet,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.7093637585639954,0.5496233105659485,0.9825022220611572,0.6169002652168274,0.9367761611938477
+UNetDeconv,drive,BCEWithLogitsLoss with pos_weight,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.7024484276771545,0.5413644909858704,0.9516006708145142,0.7246580123901367,0.9232168197631836
+DilatedConvNet,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.6910470128059387,0.5279387831687927,0.9785836338996887,0.607033371925354,0.9321136474609375
+UNetDeconv,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.6735786199569702,0.5078164935112,0.9811887741088867,0.57464200258255,0.9303417205810547
+UNetDeconv,drive,BCEWithLogitsLoss with pos_weight,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.6709455847740173,0.5048292875289917,0.9785215258598328,0.5806810855865479,0.9287633895874023
+UNetDeconv,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.6689364910125732,0.5025578737258911,0.9782490134239197,0.5790264010429382,0.9283180236816406
+DilatedConvNet,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.6680474281311035,0.5015549659729004,0.9806731939315796,0.5693654417991638,0.9292306900024414
+DilatedConvNet,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.6645159721374512,0.49758437275886536,0.9838908910751343,0.5536577701568604,0.9300813674926758
+DilatedConvNet,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.661712646484375,0.49444738030433655,0.9819800853729248,0.5567764043807983,0.9287996292114258
+DilatedConvNet,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.6588480472564697,0.49125534296035767,0.9838363528251648,0.546802818775177,0.9291763305664062
+DilatedConvNet,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.6443774104118347,0.47533687949180603,0.987159788608551,0.5180333256721497,0.9284858703613281
+DilatedConvNet,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.5733441710472107,0.40187978744506836,0.9905638694763184,0.42840802669525146,0.9202547073364258
+DilatedConvNet,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.5531890988349915,0.3823506832122803,0.9871565103530884,0.4167035222053528,0.9158096313476562
+UNetDeconv,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.4560377597808838,0.2953684628009796,0.9950121641159058,0.30567458271980286,0.9087963104248047
+DilatedConvNet,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.3737301826477051,0.22980822622776031,0.9900035858154297,0.24587863683700562,0.8969354629516602
+UNetDilated,drive,BCEWithLogitsLoss with pos_weight,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.3251885771751404,0.19416429102420807,0.9477627873420715,0.26511675119400024,0.8623838424682617
+UNetDilated,drive,BDLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.31805485486984253,0.18909943103790283,0.5052821636199951,0.8435331583023071,0.5475873947143555
+UNetDeconv,drive,BDLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.3168700039386749,0.18826234340667725,0.5087461471557617,0.8352370858192444,0.5495805740356445
+UNetDilated,drive,BDLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.3167089819908142,0.18814869225025177,0.49781346321105957,0.8491223454475403,0.5417518615722656
+UNetDeconv,drive,BDLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.31629303097724915,0.18785515427589417,0.5224169492721558,0.8154652118682861,0.5590686798095703
+EncDec_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.1329524666070938,0.07121000438928604,0.9869264960289001,0.07772253453731537,0.8732118606567383
+UNetDilated,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.09392006695270538,0.04927394166588783,0.985092043876648,0.05441264063119888,0.8686914443969727
+UNetDilated,drive,BCEWithLogitsLoss with pos_weight,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.06930878758430481,0.03589842841029167,0.9911622405052185,0.038117822259664536,0.8719644546508789
+EncDec_batchnorm_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_batchnorm_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_base,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDecStride,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+EncDec_dropout,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+UNetDilated,drive,BCEWithLogitsLoss,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+UNetDeconv,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+UNetDilated,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
+UNetDilated,drive,BFLWithLogits,"JointRandomTransforms(horizontal_p=0.5, vertical_p=0.5, rotation_degree=90, perspective_p=0, size=512)",0.0,0.0,1.0,0.0,0.8749294281005859
