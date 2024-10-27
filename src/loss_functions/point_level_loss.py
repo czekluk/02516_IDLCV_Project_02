@@ -1,4 +1,5 @@
 import torch
+import torch.nn as nn
 import numpy as np
 
 def image_level_loss(preds, smooth = 1e-10):
@@ -40,8 +41,8 @@ def point_level_loss(preds, point_supervision, smooth = 1e-10):
     loss = image_level_loss(preds, smooth)
 
     for i, mask in enumerate(point_supervision):
-        foreground_points = np.argwhere(mask == 1).T
-        background_points = np.argwhere(mask == 0).T
+        foreground_points = torch.argwhere(mask == 1)
+        background_points = torch.argwhere(mask == 0)
         for (x, y) in foreground_points:
             SiGi = S[i, :, x, y]
             loss[i] += -torch.log(SiGi + smooth)[0] # presence loss (foreground)
@@ -51,6 +52,17 @@ def point_level_loss(preds, point_supervision, smooth = 1e-10):
             loss[i] += -torch.log(1 - SiGi + smooth)[0] # absence loss (background)
 
     return loss # shape [batch_size]
+
+class PLLWithLogits(nn.Module):
+    def __init__(self, smooth=1e-10):
+        """
+        Point level cross entropy loss.
+        """
+        super().__init__()
+        self.smooth = smooth
+
+    def forward(self, inputs, targets):
+        return torch.mean(point_level_loss(inputs, targets, self.smooth))
 
 if __name__ == '__main__':
     preds = torch.rand(16, 1, 512, 512) # simulate predictions from model: [batch_size, 1, H, W]

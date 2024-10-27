@@ -57,6 +57,12 @@ Next meeting Thursday 14:00 (24.10.2025)
 
 Next meeting Sunday 11:00 (27.10.25)
 
+## ToDo V4
+- plotting function for weak labels - Alex
+- put results to poster - Lukas, Filip & Zeljko
+- Ablation study (number of clicks, sampling strategy for clicks) - Lukas
+- RandomResizeCrop for DRIVE dataset - Zeljko
+
 ## Submission Deadline
 
 Submission on Tuesday 29th October at 18:00
