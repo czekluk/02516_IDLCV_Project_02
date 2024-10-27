@@ -30,7 +30,9 @@ class Trainer:
         self.criterions = criterion_functions
         self.models = models
         self.optimizer_functions = optimizer_functions
+        print("optimizer_functions: ", self.optimizer_functions)
         self.epochs = epochs
+        print("epochs: ", self.epochs)
         self.train_loader = train_loader
         self.test_loader = test_loader
         self.train_transform = train_transform
@@ -49,17 +51,20 @@ class Trainer:
         outputs = []
         count = 0
         for network in self.models:
-            for criterion in self.criterions:
+            for criterion, criterion_description in self.criterions:
                 for optimizer_config in self.optimizer_functions:
                     for epoch_no in self.epochs:
                         print("#########################################################")
                         print(f"Training model: {network.__name__}")
                         print(f"Description: {self.description[count]}")
-                        print(f"Optimizer: {optimizer_config['optimizer'].__name__}")
-                        print(f"Criterion: {criterion.__class__.__name__}")
+                        optimizer = optimizer_config["optimizer"]
+                        optimizer_name = optimizer.__name__
+                        print(f"Optimizer: {optimizer_name}")
+                        print(f"Criterion: {criterion_description}")
                         print(f"Training for {epoch_no} epochs")
                         model = network()
-                        out_dict = self._train_single_configuration(model, optimizer_config, epoch_no, criterion)
+                        print("optimizer_config, epoch_no, [criterion, criterion_description]", optimizer_config, epoch_no, [criterion, criterion_description])
+                        out_dict = self._train_single_configuration(model, optimizer_config, epoch_no, (criterion, criterion_description))
                         out_dict["description"] = self.description[count]
                         out_dict["timestamp"] = datetime.datetime.now()
                         out_dict["transform"] = self.train_transform
@@ -69,10 +74,10 @@ class Trainer:
         return outputs_sorted
     
     
-    def _train_single_configuration(self, model: nn.Module, optimizer_config: dict, num_epochs: int, criterion) -> dict:
+    def _train_single_configuration(self, model: nn.Module, optimizer_config: dict, num_epochs: int, criterion: tuple) -> dict:
         model.to(self.device)
         optimizer = optimizer_config["optimizer"](model.parameters(), **optimizer_config["params"])
-        
+        criterion,criterion_description = criterion
         out_dict = {
             'model_name':       model.__class__.__name__,
             'description':      None,
@@ -92,10 +97,9 @@ class Trainer:
             'test_specificity': [],
             'epochs':           num_epochs,
             'optimizer_config': optimizer_config,
-            'criterion':        criterion.__class__.__name__,
+            'criterion':        criterion_description,
             'transform':        None
             }
-        
         for epoch in tqdm(range(num_epochs), unit='epoch'):
             model.train()
             train_loss = []

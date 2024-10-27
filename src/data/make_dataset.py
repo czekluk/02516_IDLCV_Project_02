@@ -145,6 +145,7 @@ class SegmentationDataModule:
         assert type(data_path)==str, "data_path needs to be a string"
         assert train_split < 1, "train_split needs to be less than 1"
         assert train_split > 0, "train_split needs to be more than 0"
+        self.drive=drive
         self.batch_size = batch_size
         self.data_path = data_path
         self.point_level_strategy = point_level_strategy

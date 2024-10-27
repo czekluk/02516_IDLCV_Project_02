@@ -8,9 +8,10 @@ from models.encoder_decoder import EncDec_base, EncDecStride, EncDec_dropout, Di
 from models.unet import UNetDeconv, UNetDilated
 from data.custom_transforms import base_transform, random_transform
 from data.make_dataset import SegmentationDataModule
+import csv
 
-PROJECT_BASE_DIR = os.path.dirname(os.path.abspath(''))
-DEFAULT_PLOT_METRICS = ["train_acc", "test_acc", "test_dice", "test_iou", "test_sensitivity", "test_specificity"]
+PROJECT_BASE_DIR = os.path.dirname("/zhome/25/a/202562/intro_deep_learning_in_computer_vision/02516_IDLCV_Project_02/")
+DEFAULT_PLOT_METRICS = ["test_dice", "test_iou", "test_sensitivity", "test_specificity"]
 DATA_DIR = "/dtu/datasets1/02516"
 PH2_DATA_DIR = os.path.join(DATA_DIR, "PH2_Dataset_images")
 DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
@@ -35,8 +36,9 @@ class Visualizer():
         with open(json_path, "r") as f:
             data = json.load(f)
         
-        if len(data) >= len(self.linestyles):
-            raise ValueError("Visualizer currently only supports max. 4 different line styles. Please reduce the number of models to plot.")
+        if len(data) > len(self.linestyles):
+            print(f"Warning: More than {len(self.linestyles)} models to plot. Reducing to the first {len(self.linestyles)} models.")
+            data = data[:len(self.linestyles)]
         
         colors = plt.get_cmap(cmap, len(metrics))
         
@@ -52,6 +54,22 @@ class Visualizer():
             time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             plt.savefig(save_path + f"training_{time}.png")
         plt.show()
+
+    def plot_all_json_files(self, json_files, metrics=DEFAULT_PLOT_METRICS, cmap='Spectral', save_dir=None, figsize=(8, 5)):
+        """Plot the results from multiple json files containing the results.
+        
+        Args:
+            json_files (list): List of paths to the json files containing the results.
+            metrics (list, optional): A list of the metric keys to plot from the json files. Defaults to ["train_acc", "test_acc", "test_dice", "test_iou", "test_sensitivity", "test_specificity"].
+            cmap (str, optional): The colormap to use for the lines. Defaults to 'Spectral'.
+            save_dir (str, optional): The directory to save the plots. Defaults to None (no save).
+            figsize (tuple, optional): The size of the plot. Defaults to (8, 5).
+        """
+        for json_file in json_files:
+            dataset_type = "drive" if "drive" in json_file else "ph2"
+            model_type = "encdec" if "encdec" in json_file else "unet"
+            save_path = os.path.join(save_dir, f"{model_type}_{dataset_type}_") if save_dir else None
+            self.plot_training_json(json_file, metrics=metrics, cmap=cmap, save_path=save_path, figsize=figsize)
 
     def plot_prediction_comparison(self, model, batch, save_path=None, figsize=(10, 5)):
         """Plot a comparison of the predicted and target images.
@@ -166,28 +184,124 @@ class Visualizer():
             time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             f.savefig(save_path + f"pred_overlay_data_{time}.png", bbox_inches='tight')
         plt.show()
-
+def get_best_model(summary_path):
+    with open(summary_path, "r") as f:
+        reader = csv.reader(f)
+        next(reader)  # Skip header
+        best_model = None
+        best_diou = -float('inf')
+        for row in reader:
+            model_name, test_diou = row[0], float(row[5])  # Assuming Test IoU is the 7th column
+            if test_diou > best_diou:
+                best_model = model_name
+                best_diou = test_diou
+    return best_model, best_diou
 if __name__ == "__main__":
     # Init class
+    
+    json_files = [
+        os.path.join(PROJECT_BASE_DIR, "results/experiments_encdec_drive.json"),
+        os.path.join(PROJECT_BASE_DIR, "results/experiments_encdec_ph2.json"),
+        os.path.join(PROJECT_BASE_DIR, "results/experiments_unet_drive.json"),
+        os.path.join(PROJECT_BASE_DIR, "results/experiments_unet_ph2.json")
+    ]
+    metrics_to_plot = ["test_acc", "test_dice", "test_iou", "test_sensitivity", "test_specificity"]
+    save_dir = os.path.join(PROJECT_BASE_DIR, "results/figures/")
+    
     visualizer = Visualizer()
-    json_path = os.path.join(PROJECT_BASE_DIR, "results/experiments_to_plot.json")
-    metrics_to_plot = ["train_acc", "test_acc"]
-    save_path = os.path.join(PROJECT_BASE_DIR, "results/figures/")
+    # # Plot training results for all JSON files
+    visualizer.plot_all_json_files(json_files, metrics=metrics_to_plot, save_dir=save_dir)
 
-    # Load model
-    model = EncDec_base()
-    model_path = os.path.join(PROJECT_BASE_DIR, "results/saved_models/EncDec_base-2024-10-21_0-51-51-0.8548-EncDec_base.pth")
-    model.load_state_dict(torch.load(model_path, weights_only=True, map_location=device))
 
-    # Get data
+    # Load summary files
+    # Identify the best models based on test_iou
+    # Collect dIoU values from summary files
+    PROJECT_BASE_DIR = os.path.dirname("/zhome/25/a/202562/intro_deep_learning_in_computer_vision/02516_IDLCV_Project_02/")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # Load summary files
+    summary_files = [
+        os.path.join(PROJECT_BASE_DIR, "results/summary_drive.csv"),
+        os.path.join(PROJECT_BASE_DIR, "results/summary_ph2.csv")
+]
+    summary_diou = {}
+    for summary_file in summary_files:
+        dataset = "drive" if "drive" in summary_file else "ph2"
+        with open(summary_file, 'r') as f:
+            reader = csv.reader(f)
+            next(reader)  # Skip header
+            first_row = next(reader)
+            best_models = []
+            for row in reader:
+                model_name, test_diou = row[0], float(row[5])
+                best_models.append((model_name, test_diou))
+            best_models = sorted(best_models, key=lambda x: x[1], reverse=True)[:5]
+            for best_model, best_diou in best_models:
+                summary_diou[(best_model, dataset)] = round(best_diou, 3)
+            best_diou = float(first_row[5])
+            summary_diou[(best_model, dataset)] = round(best_diou, 3)
+    # Reduce summary_diou to contain only the best dIoU from both the ph2 and drive datasets
+    best_summary_diou = {}
+    for dataset in ["drive", "ph2"]:
+        best_model = max(
+            ((model, diou) for (model, ds), diou in summary_diou.items() if ds == dataset),
+            key=lambda x: x[1],
+            default=None
+        )
+        if best_model:
+            best_summary_diou[(best_model[0], dataset)] = best_model[1]
+    summary_diou = best_summary_diou
+    # Identify the best models based on dIoU
+    best_models = []
+
+    saved_models_dir = os.path.join(PROJECT_BASE_DIR, "results/saved_models")
+    saved_model_files = os.listdir(saved_models_dir)
+
+    for model_file in saved_model_files:
+        parts = model_file.split('-')
+        model_name = parts[0]
+        diou = round(float(parts[6]), 3)
+        for (summary_model_name, dataset), summary_diou_value in summary_diou.items():
+            if model_name == summary_model_name and diou == summary_diou_value:
+                best_models.append((model_name, diou, model_file, dataset))
+
+    # Paths to the best models
+    best_drive_model_path = None
+    best_ph2_model_path = None
+
+    for model_name, diou, model_file, dataset in best_models:
+        model_path = os.path.join(saved_models_dir, model_file)
+        if dataset == "ph2":
+            best_ph2_model_path = model_path
+        # elif dataset == "drive":
+        #     best_drive_model_path = model_path
+      
+
+    # Print paths to the best models
+    print(f"Best Drive Model Path: {best_drive_model_path}")
+    print(f"Best PH2 Model Path: {best_ph2_model_path}")
+
+    # Load models
+    drive_model = torch.load(best_drive_model_path, map_location=device)
+    drive_model_name = os.path.basename(best_drive_model_path).split('-')[0]
+    drive_model = eval(drive_model_name)()
+    drive_model.load_state_dict(torch.load(best_drive_model_path, map_location=device))
+    drive_model.to(device)
+    ph2_model = torch.load(best_ph2_model_path, map_location=device)
+    ph2_model_name = os.path.basename(best_ph2_model_path).split('-')[0]
+    ph2_model = eval(ph2_model_name)()
+    ph2_model.load_state_dict(torch.load(best_ph2_model_path, map_location=device))
+    ph2_model.to(device)
+   
+    train_transform = random_transform(size=512)
     test_transform = base_transform(size=512)
-    dm = SegmentationDataModule(test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=4)
-    #dm = SegmentationDataModule(test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=4)
-    testloader = dm.test_dataloader()
-    batch = next(iter(testloader))
-
-    # Plot training results
-    visualizer.plot_training_json(json_path=json_path, save_path=save_path, metrics=metrics_to_plot)
-    visualizer.plot_prediction_comparison(model, batch, save_path=save_path)
-    visualizer.plot_prediction_overlay_target(model, batch, save_path=save_path)
-    visualizer.plot_prediction_overlay_data(model, batch, save_path=save_path)
+    data_module_ph2 = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
+    data_module_drive = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
+    drive_batch = next(iter(data_module_drive.test_dataloader()))
+    ph2_batch = next(iter(data_module_ph2.test_dataloader()))
+    drive_batch = next(iter(data_module_drive.test_dataloader()))
+    # Plot predictions
+    visualizer.plot_prediction_overlay_target(drive_model, drive_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
+    visualizer.plot_prediction_overlay_target(ph2_model, ph2_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
+    visualizer.plot_prediction_overlay_data(drive_model, drive_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
+    visualizer.plot_prediction_overlay_data(ph2_model, ph2_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
