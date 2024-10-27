@@ -5,7 +5,7 @@ import PIL.Image as Image
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
-from data.custom_transforms import random_transform, base_transform
+from data.custom_transforms import random_crop_transform, random_transform, base_transform
 from data.weak_labels_creator import WeakLabelsCreator
 
 from torch.utils.data import DataLoader, Dataset
@@ -353,8 +353,27 @@ def test_ph2_weakly_annotated():
 
     dm_ph2.plot_weakly_labeled_examples()
 
+def test_drive_random_crop():
+    data_dir = os.path.join(PROJECT_BASE_DIR, "data")
+    drive_dir = os.path.join(data_dir, "DRIVE")
+    print("Data directory: ", drive_dir)
+
+    img_size = 512
+    train_transform = random_crop_transform(size=img_size, horizontal=True, rotation=True)
+    test_transform = base_transform(size=img_size)
+
+    dm_drive = SegmentationDataModule(
+        data_path=drive_dir, train_transform=train_transform, test_transform=test_transform, drive=True
+    )
+    print(dm_drive)
+    trainloader = dm_drive.train_dataloader()
+    testloader = dm_drive.test_dataloader()
+
+    dm_drive.plot_examples()
+
 
 if __name__ == "__main__":
-    test_ph2_weakly_annotated()
-    test_ph2()
-    test_drive()
+    #test_ph2_weakly_annotated()
+    #test_ph2()
+    #test_drive()
+    test_drive_random_crop()

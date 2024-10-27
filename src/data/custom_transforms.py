@@ -72,6 +72,73 @@ class JointRandomTransforms(torch.nn.Module):
                 f"vertical_p={self.vertical_p}, rotation_degree={self.rotation_degree}, "
                 f"perspective_p={self.perspective_p}, size={self.size})")
 
+class JointRandomCropTransforms(JointRandomTransforms):
+    def __init__(self, size: int = 512, crop_size: int = 256, num_crops: int = 5, **kwargs):
+        """
+        Initialize the random crop transform.
+        
+        Args:
+            size (int): The size to which the images will be resized after cropping.
+            crop_size (int): The size of the random crop.
+            num_crops (int): The number of crops to generate from each image.
+            kwargs: Additional arguments for random transforms.
+        """
+        super().__init__(size=size, **kwargs)
+        self.crop_size = crop_size
+        self.num_crops = num_crops
+
+    def forward(self, img1, img2):
+        """
+        Apply random cropping and other transformations to both images.
+        
+        Args:
+            img1 (PIL.Image or Tensor): The input image.
+            img2 (PIL.Image or Tensor): The corresponding mask.
+        
+        Returns:
+            List[Tuple[Tensor, Tensor]]: A list of transformed image and mask pairs.
+        """
+        img1 = self.base_transform(img1)
+        img2 = self.base_transform(img2)
+        
+        crops = []
+        for _ in range(self.num_crops):
+            # Random crop
+            i, j, h, w = T.RandomCrop.get_params(img1, output_size=(self.crop_size, self.crop_size))
+            cropped_img1 = F.crop(img1, i, j, h, w)
+            cropped_img2 = F.crop(img2, i, j, h, w)
+            
+            # Apply other random transformations
+            if torch.rand(1) < self.horizontal_p:
+                cropped_img1 = F.hflip(cropped_img1)
+                cropped_img2 = F.hflip(cropped_img2)
+
+            if torch.rand(1) < self.vertical_p:
+                cropped_img1 = F.vflip(cropped_img1)
+                cropped_img2 = F.vflip(cropped_img2)
+
+            if torch.rand(1) < self.perspective_p:
+                startpoints, endpoints = T.RandomPerspective.get_params(cropped_img1.size(1), cropped_img1.size(0), distortion_scale=0.5)
+                cropped_img1 = F.perspective(cropped_img1, startpoints, endpoints)
+                cropped_img2 = F.perspective(cropped_img2, startpoints, endpoints)
+
+            angle = T.RandomRotation.get_params([-self.rotation_degree, self.rotation_degree])
+            cropped_img1 = F.rotate(cropped_img1, angle)
+            cropped_img2 = F.rotate(cropped_img2, angle)
+
+            # Resize the crops back to the original size
+            cropped_img1 = F.resize(cropped_img1, (self.size, self.size))
+            cropped_img2 = F.resize(cropped_img2, (self.size, self.size))
+
+            crops.append((cropped_img1, cropped_img2))
+
+        return crops
+
+    def __repr__(self):
+        return (f"{self.__class__.__name__}(crop_size={self.crop_size}, num_crops={self.num_crops}, "
+                f"horizontal_p={self.horizontal_p}, vertical_p={self.vertical_p}, "
+                f"rotation_degree={self.rotation_degree}, perspective_p={self.perspective_p}, size={self.size})")
+
 
 def base_transform(size: int = 512):
     return JointBaseTransform(size=size)
@@ -92,6 +159,29 @@ def random_transform(
     
     return JointRandomTransforms(
                 size=size,
+                horizontal_p=horizontal_p if horizontal else 0,
+                vertical_p=vertical_p if vertical else 0,
+                rotation_degree=rotation_degree if rotation else 0,
+                perspective_p=perspective_p if perspective else 0
+            )
+
+def random_crop_transform(
+    size: int = 512,
+    horizontal: bool = False,
+    horizontal_p: float = 0.5,
+    vertical: bool = False,
+    vertical_p: float = 0.5,
+    rotation: bool = False,
+    rotation_degree: int = 90,
+    perspective: bool = False,
+    perspective_p: float = 0.5,
+):
+    """Random transform chain for the image - resize, random horizontal flip, random vertical flip, random rotation, etc."""
+    
+    return JointRandomCropTransforms(
+                size=size,
+                crop_size=size//2,
+                num_crops=5,
                 horizontal_p=horizontal_p if horizontal else 0,
                 vertical_p=vertical_p if vertical else 0,
                 rotation_degree=rotation_degree if rotation else 0,
