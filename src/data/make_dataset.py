@@ -5,8 +5,8 @@ import PIL.Image as Image
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
-from custom_transforms import random_crop_transform, random_transform, base_transform
-from weak_labels_creator import WeakLabelsCreator
+from data.custom_transforms import random_crop_transform, random_transform, base_transform
+from data.weak_labels_creator import WeakLabelsCreator
 
 from torch.utils.data import DataLoader, Dataset
 

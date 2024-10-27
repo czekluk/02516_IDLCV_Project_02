@@ -6,7 +6,7 @@ from copy import deepcopy
 
 from trainer import Trainer
 from utils import save_results
-from data.custom_transforms import base_transform, random_transform
+from data.custom_transforms import base_transform, random_crop_transform, random_transform
 from data.make_dataset import SegmentationDataModule
 from models.encoder_decoder import EncDec_base, EncDecStride, EncDec_dropout, DilatedConvNet, EncDec_batchnorm_dropout
 from models.unet import UNetDeconv, UNetDilated
@@ -40,14 +40,14 @@ def get_epochs(dataset_type, class_name):
 def get_criterion_functions():
     return [
         (torch.nn.BCEWithLogitsLoss(), "BCEWithLogitsLoss"),
-        (BFLWithLogits(), "BFLWithLogits"),
-        (torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor([2.0]).cuda()), "BCEWithLogitsLoss with pos_weight"),
-        (BDLWithLogits(), "BDLWithLogits")
+        #(BFLWithLogits(), "BFLWithLogits"),
+        #(torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor([2.0]).cuda()), "BCEWithLogitsLoss with pos_weight"),
+        #(BDLWithLogits(), "BDLWithLogits")
     ]
 
 def test_experiment():
     """Experiment to test the Code using the TestCNN model"""
-    train_transform = random_transform(size=512, horizontal=True, vertical=True, rotation=True)
+    train_transform = random_crop_transform(size=512, horizontal=True, vertical=True, rotation=True)
     test_transform = base_transform(size=512)
     dm = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
     dm_drive = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
@@ -60,19 +60,19 @@ def test_experiment():
     criterion_functions = get_criterion_functions()
 
     enc_dec_models = [
-        EncDec_batchnorm_dropout,
-        EncDec_base,
+        #EncDec_batchnorm_dropout,
+        #EncDec_base,
         EncDecStride,
-        EncDec_dropout,
-        DilatedConvNet
+        #EncDec_dropout,
+        #DilatedConvNet
     ]
 
     enc_dec_descriptions = [
-        "EncDec_batchnorm_dropout",
-        "EncDec_base",
+        #"EncDec_batchnorm_dropout",
+        #"EncDec_base",
         "EncDecStride",
-        "EncDec_dropout",
-        "DilatedConvNet"
+        #"EncDec_dropout",
+        #"DilatedConvNet"
     ]
 
     unet_models = [
