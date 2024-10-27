@@ -13,6 +13,7 @@ from copy import deepcopy
 
 PROJECT_BASE_DIR = os.path.dirname("/zhome/25/a/202562/intro_deep_learning_in_computer_vision/02516_IDLCV_Project_02/")
 DEFAULT_PLOT_METRICS = ["test_dice", "test_iou", "test_sensitivity", "test_specificity"]
+
 DATA_DIR = "/dtu/datasets1/02516"
 PH2_DATA_DIR = os.path.join(DATA_DIR, "PH2_Dataset_images")
 DRIVE_DIR = os.path.join(DATA_DIR, "DRIVE")
@@ -37,20 +38,38 @@ class Visualizer():
         with open(json_path, "r") as f:
             data = json.load(f)
         
-        if len(data) > len(self.linestyles):
-            print(f"Warning: More than {len(self.linestyles)} models to plot. Reducing to the first {len(self.linestyles)} models.")
-            data = data[:len(self.linestyles)]
+       
+        # print(f"Warning: More than {len(self.linestyles)} models to plot. Reducing to the first {len(self.linestyles)} models.")
+        # Filter to include only the best UNet and the best non-UNet models
+        unet_models = [entry for entry in data if entry['model_name'].lower().startswith('unet')]
+        non_unet_models = [entry for entry in data if 'unet' not in entry['model_name'].lower()]
         
+        best_non_unet_model=None
+        best_unet_model=None
+        if unet_models:
+            best_unet_model = max(unet_models, key=lambda x: max(x.get('test_iou', [0])))
+        if non_unet_models:
+            best_non_unet_model = max(non_unet_models, key=lambda x: max(x.get('test_iou', [0])))
+        data = [model for model in [best_unet_model, best_non_unet_model] if model is not None]
         colors = plt.get_cmap(cmap, len(metrics))
         
         plt.figure(figsize=figsize)
         for i, entry in enumerate(data):
             for j, metric in enumerate(metrics):
-                plt.plot(entry[metric], label=f"{entry['model_name']} {metric}", color=colors(j), linestyle=self.linestyles[i])
+                model_name = entry['model_name']
+                existing_labels = [line.get_label() for line in plt.gca().get_lines()]
+                index = 1
+                while f"{model_name} {metric}" in existing_labels:
+                    model_name = f"{entry['model_name']}_{index}"
+                    index += 1
+                plt.plot(entry[metric], label=f"{model_name} {metric}", color=colors(j), linestyle=self.linestyles[i])
         plt.xlabel("Epoch")
-        plt.xticks(range(max([len(entry["train_acc"]) for entry in data])))
-        plt.ylabel("Accuracy")
+        max_epochs = max([len(entry["train_acc"]) for entry in data])
+        plt.xticks(np.linspace(0, max_epochs, 5, dtype=int))
+        plt.ylabel("Metrics")
         plt.legend()
+        dataset_type = "drive" if "drive" in json_path else "ph2"
+        plt.title(f"Training Metrics for the {dataset_type} dataset")
         if save_path:
             time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             plt.savefig(save_path + f"training_{time}.png")
@@ -66,10 +85,42 @@ class Visualizer():
             save_dir (str, optional): The directory to save the plots. Defaults to None (no save).
             figsize (tuple, optional): The size of the plot. Defaults to (8, 5).
         """
+        united_data = []
         for json_file in json_files:
-            dataset_type = "drive" if "drive" in json_file else "ph2"
-            model_type = "encdec" if "encdec" in json_file else "unet"
-            save_path = os.path.join(save_dir, f"{model_type}_{dataset_type}_") if save_dir else None
+            with open(json_file, "r") as f:
+                data = json.load(f)
+                united_data.extend(data)
+        
+        drive_data = []
+        ph2_data = []
+        
+        for json_file in json_files:
+            with open(json_file, "r") as f:
+                data = json.load(f)
+                if "drive" in json_file:
+                    drive_data.extend(data)
+                elif "ph2" in json_file:
+                    ph2_data.extend(data)
+
+        drive_json_path = os.path.join(PROJECT_BASE_DIR, "results", "experiments_drive_united.json")
+        ph2_json_path = os.path.join(PROJECT_BASE_DIR, "results", "experiments_ph2_united.json")
+
+        with open(drive_json_path, "w") as f:
+            json.dump(drive_data, f, indent=4)
+
+        with open(ph2_json_path, "w") as f:
+            json.dump(ph2_data, f, indent=4)
+        json_files = []
+        json_files.append(drive_json_path)
+        json_files.append(ph2_json_path)
+        for json_file in json_files:
+            if "drive" in json_file:
+                dataset_type = "drive"
+            elif "ph2" in json_file:
+                dataset_type = "ph2"
+            else:
+                dataset_type = "united"
+            save_path = os.path.join(save_dir, f"{dataset_type}_united") if save_dir else None
             self.plot_training_json(json_file, metrics=metrics, cmap=cmap, save_path=save_path, figsize=figsize)
 
     def plot_prediction_comparison(self, model, batch, save_path=None, figsize=(10, 5)):
@@ -207,6 +258,8 @@ if __name__ == "__main__":
         os.path.join(PROJECT_BASE_DIR, "results/experiments_unet_ph2.json")
     ]
     metrics_to_plot = ["test_acc", "test_dice", "test_iou", "test_sensitivity", "test_specificity"]
+    # metrics_to_plot = ["test_iou"]
+
     save_dir = os.path.join(PROJECT_BASE_DIR, "results/figures/")
     
     visualizer = Visualizer()
@@ -263,7 +316,7 @@ if __name__ == "__main__":
 
     saved_models_dir = os.path.join(PROJECT_BASE_DIR, "results/saved_models")
     saved_model_files = os.listdir(saved_models_dir)
-
+    saved_model_files = [file for file in saved_model_files if not file.startswith('.git')]
     for model_file in saved_model_files:
         parts = model_file.split('-')
         model_name = parts[0]
