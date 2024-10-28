@@ -71,7 +71,7 @@ class Trainer:
                         out_dict["transform"] = self.train_transform
                         outputs.append(out_dict)
             count += 1
-        outputs_sorted = sorted(outputs, key=lambda x: x['test_acc'][-1], reverse=True)
+        outputs_sorted = sorted(outputs, key=lambda x: x['test_iou'][-1], reverse=True)
         return outputs_sorted
     
     

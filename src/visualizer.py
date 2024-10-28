@@ -10,6 +10,7 @@ from data.custom_transforms import base_transform, random_transform
 from data.make_dataset import SegmentationDataModule
 import csv
 from copy import deepcopy
+from decimal import Decimal
 
 PROJECT_BASE_DIR = os.path.dirname("/zhome/25/a/202562/intro_deep_learning_in_computer_vision/02516_IDLCV_Project_02/")
 DEFAULT_PLOT_METRICS = ["test_dice", "test_iou", "test_sensitivity", "test_specificity"]
@@ -349,11 +350,11 @@ if __name__ == "__main__":
                     done= False
                 model_name, test_diou = row[0], float(row[5])
                 best_models.append((model_name, test_diou))
-            best_models = sorted(best_models, key=lambda x: x[1], reverse=True)[:5]
+            best_models = sorted(best_models, key=lambda x: x[1], reverse=True)
             for best_model, best_diou in best_models:
                 if (best_model, dataset) not in summary_diou:
                     summary_diou[(best_model, dataset)] = []
-                summary_diou[(best_model, dataset)].append(round(best_diou, 3))
+                summary_diou[(best_model, dataset)].append(best_diou)
             # best_diou = float(first_row[5])
             # summary_diou[(best_model, dataset)] = round(best_diou, 3)
     # Reduce summary_diou to contain only the best dIoU from both the ph2 and drive datasets
@@ -376,8 +377,11 @@ if __name__ == "__main__":
     for model_file in saved_model_files:
         parts = model_file.split('-')
         model_name = parts[0]
-        diou = round(float(parts[6]), 3)
+        decimal_value= Decimal(parts[6])
+        diou = round(decimal_value, 3)
         for (summary_model_name, dataset), summary_diou_value in summary_diou.items():
+            summary_diou_value=Decimal(summary_diou_value)
+            summary_diou_value = round(summary_diou_value, 3)
             if model_name == summary_model_name and diou == summary_diou_value:
                 best_models.append((model_name, diou, model_file, dataset))
 
@@ -411,13 +415,21 @@ if __name__ == "__main__":
    
     train_transform = random_transform(size=512)
     test_transform = base_transform(size=512)
-    data_module_ph2 = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
-    data_module_drive = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
+    # data_module_ph2 = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8)
+    data_module_ph2 = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=False, data_path=PH2_DATA_DIR, batch_size=8, 
+                                weak_annotations=True, point_level_strategy="central_clicks", num_points_per_label=10)
+    # data_module_drive = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8)
+    data_module_drive = SegmentationDataModule(train_transform=train_transform, test_transform=test_transform, drive=True, data_path=DRIVE_DIR, batch_size=8, 
+                                weak_annotations=True, point_level_strategy="central_clicks", num_points_per_label=10)
     drive_batch = next(iter(data_module_drive.test_dataloader()))
     ph2_batch = next(iter(data_module_ph2.test_dataloader()))
     drive_batch = next(iter(data_module_drive.test_dataloader()))
     # Plot predictions
-    visualizer.plot_prediction_overlay_target(drive_model, drive_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
-    visualizer.plot_prediction_overlay_target(ph2_model, ph2_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
-    visualizer.plot_prediction_overlay_data(drive_model, drive_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
-    visualizer.plot_prediction_overlay_data(ph2_model, ph2_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
+    # visualizer.plot_prediction_overlay_target(drive_model, drive_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
+    # visualizer.plot_prediction_overlay_target(ph2_model, ph2_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
+    # visualizer.plot_prediction_overlay_data(drive_model, drive_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
+    # visualizer.plot_prediction_overlay_data(ph2_model, ph2_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"))
+    visualizer.plot_weakly_labeled_prediction(drive_model, drive_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"), figsize=(10, 3), cmap='cool')
+    visualizer.plot_weakly_labeled_prediction(ph2_model, ph2_batch, save_path=os.path.join(PROJECT_BASE_DIR, "results"), figsize=(10, 3), cmap='cool')
+
+
